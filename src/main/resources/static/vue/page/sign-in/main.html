@@ -1,0 +1,41 @@
+<v-main>
+    <v-container class="fill-height">
+        <v-row>
+            <v-col align="center">
+                <v-card max-width="400">
+                    <v-card-title>메타-OJT 로그인</v-card-title>
+                    <v-card-text>
+                        <v-form>
+                            <v-text-field
+                                autocomplete="on"
+                                label="아이디"
+                                type="text"
+                                v-model="data.username"
+                                @keydown.enter="login();"
+                            ></v-text-field>
+                            <v-text-field
+                                autocomplete="on"
+                                label="비밀번호"
+                                type="password"
+                                v-model="data.password"
+                                @keydown.enter="login();"
+                            ></v-text-field>
+                        </v-form>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="secondary"
+                            to="/sign-up"
+                        >회원 가입</v-btn>
+                        <v-btn
+                            color="primary"
+                            :loading="btn.signIn.loading"
+                            @click="login();"
+                        >로그인</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-container>
+</v-main>

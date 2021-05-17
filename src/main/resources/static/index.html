@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <!-- title -->
+    <title>meta-ojt</title>
+    <!-- favicon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/common/favicon/favicon-16x16.png">
+    <!-- materialdesignicons 5.8.55 -->
+    <link rel="stylesheet" type="text/css" href="/resources/lib/materialdesignicons/5.8.55/css/materialdesignicons.min.css">
+    <!-- spoqa-han-sans 2.1.2 -->
+    <link rel="stylesheet" type="text/css" href="/resources/lib/spoqa-han-sans/2.1.2/css/spoqa-han-sans.css">
+    <!-- vuetify 2.4.5 -->
+    <link rel="stylesheet" type="text/css" href="/resources/lib/vuetify/2.4.5/css/vuetify.min.css">
+    <!-- meta-ojt 1.0.0 -->
+    <link rel="stylesheet" type="text/css" href="/resources/lib/meta-ojt/1.0.0/css/meta-ojt.css">
+    <!-- meta-ojt-thema 1.0.0 -->
+    <link rel="stylesheet" type="text/css" href="/resources/lib/meta-ojt/1.0.0/css/meta-ojt-thema.css">
+</head>
+<body>
+    <v-app id="app">
+        <v-fade-transition hide-on-leave>
+            <router-view></router-view>
+        </v-fade-transition>
+        <alert-component
+            :message="store.state.app.alert.message"
+            :callback="store.state.app.alert.callback"
+            v-model="store.state.app.alert.value"
+        ></alert-component>
+        <confirm-component
+            :message="store.state.app.confirm.message"
+            :oktext="store.state.app.confirm.oktext"
+            :canceltext="store.state.app.confirm.canceltext"
+            :callback="store.state.app.confirm.callback"
+            v-model="store.state.app.confirm.value"
+        ></confirm-component>
+           <v-overlay
+          :z-index="store.state.app.loading.zIndex"
+          :value="store.state.app.loading.overlay"
+        >
+              <v-progress-circular
+                indeterminate
+                size="128"
+              ></v-progress-circular>
+        </v-overlay>
+    </v-app>
+    <!-- axios 0.21.0 -->
+    <script type="text/javascript" src="/resources/lib/axios/0.21.0/js/axios.min.js"></script>
+    <!-- basil 0.4.11 -->
+    <script type="text/javascript" src="/resources/lib/basil/0.4.11/js/basil.min.js"></script>
+    <!-- lodash 4.17.15 -->
+    <script type="text/javascript" src="/resources/lib/lodash/4.17.15/js/lodash.min.js"></script>
+    <!-- qs 6.9.4 -->
+    <script type="text/javascript" src="/resources/lib/qs/6.9.4/js/qs.js"></script>
+    <!-- jwt-decode 3.1.2 -->
+    <script type="text/javascript" src="/resources/lib/jwt-decode/3.1.2/js/jwt-decode.js"></script>
+    <!-- vue 2.6.11 -->
+    <script type="text/javascript" src="/resources/lib/vue/2.6.11/js/vue.min.js"></script>
+    <!-- vuex 3.5.1 -->
+    <script type="text/javascript" src="/resources/lib/vuex/3.5.1/js/vuex.min.js"></script>
+    <!-- vue-router 3.4.9 -->
+    <script type="text/javascript" src="/resources/lib/vue-router/3.4.9/js/vue-router.min.js"></script>
+    <!-- vuetify 2.4.5 -->
+    <script type="text/javascript" src="/resources/lib/vuetify/2.4.5/js/vuetify.min.js"></script>
+    <!-- moment 2.29.1 -->
+    <script type="text/javascript" src="/resources/lib/moment/2.29.1/js/moment-with-locales.min.js"></script>
+    <!-- meta-ojt 1.0.0 -->
+    <script type="text/javascript" src="/resources/lib/meta-ojt/1.0.0/js/meta-ojt.js"></script>
+    <!-- Daum PostCode -->
+    <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- vue component -->
+    <script type="text/javascript" src="/vue/component/alert.js"></script>
+    <script type="text/javascript" src="/vue/component/confirm.js"></script>
+    <script type="text/javascript" src="/vue/component/date-picker.js"></script>
+    <script type="text/javascript" src="/vue/component/data-table-custom-component.js"></script>
+    <!-- vue layout -->
+    <script type="text/javascript" src="/vue/layout/main.js"></script>
+    <script type="text/javascript" src="/vue/layout/blank.js"></script>
+    <!-- vue page -->
+    <script type="text/javascript" src="/vue/page/sign-in/main.js"></script>
+    <script type="text/javascript" src="/vue/page/sign-up/main.js"></script>
+    <script type="text/javascript" src="/vue/page/main/main.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/api/main.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/api/main-detail.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/menu/main.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/role/main.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/role/main-detail.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/user/main.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/ban-ip/main.js"></script>
+    <script type="text/javascript" src="/vue/page/setting/ban-ip/main-detail.js"></script>
+    <!-- vue config -->
+    <script type="text/javascript" src="/vue/config/router.js"></script>
+    <script type="text/javascript" src="/vue/config/store.js"></script>
+    <script type="text/javascript" src="/vue/config/vuetify.js"></script>
+    <!-- vue index -->
+    <script type="text/javascript" src="/vue/index.js"></script>
+</body>
+</html>

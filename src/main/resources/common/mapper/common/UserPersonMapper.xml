@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.metasoft.groupware.api.common.mapper.UserPersonMapper">
+
+    <sql id="selectFrom">
+        SELECT
+            `user_person`.`user_id`,
+            `user_person`.`person_id`,
+            `user_person_user`.`id` AS `user_person_user_id`,
+            `user_person_user`.`username` AS `user_person_user_username`,
+            `user_person_user`.`password` AS `user_person_user_password`,
+            `user_person_user`.`email` AS `user_person_user_email`,
+            `user_person_user`.`last_modified_password_date` AS `user_person_user_last_modified_password_date`,
+            `user_person_user`.`status` AS `user_person_user_status`,
+            `user_person_user`.`created_date` AS `user_person_user_created_date`,
+            `user_person_user`.`last_modified_date` AS `user_person_user_last_modified_date`,
+            `user_person_person`.`id` AS `user_person_person_id`,
+            `user_person_person`.`name` AS `user_person_person_name`,
+            `user_person_person`.`created_date` AS `user_person_person_created_date`,
+            `user_person_person`.`last_modified_date` AS `user_person_person_last_modified_date`
+        FROM
+            `tb_user_person` `user_person`
+        LEFT OUTER JOIN
+            `tb_user` `user_person_user`
+        ON
+            `user_person`.`user_id` = `user_person_user`.`id`
+        LEFT OUTER JOIN
+            `tb_person` `user_person_person`
+        ON
+            `user_person`.`person_id` = `user_person_person`.`id`
+    </sql>
+
+    <sql id="where">
+        <where>
+        </where>
+    </sql>
+
+    <resultMap id="userPersonResultMap" type="kr.co.metasoft.groupware.api.common.entity.UserPersonEntity">
+        <result property="userId" column="user_id"/>
+        <result property="personId" column="person_id"/>
+        <association property="user" columnPrefix="user_person_user_">
+            <result property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="lastModifiedPasswordDate" column="last_modified_password_date"/>
+            <result property="status" column="status"/>
+            <result property="createdDate" column="created_date"/>
+            <result property="lastModifiedDate" column="last_modified_date"/>
+        </association>
+        <association property="person" columnPrefix="user_person_person_">
+            <result property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="createdDate" column="created_date"/>
+            <result property="lastModifiedDate" column="last_modified_date"/>
+        </association>
+    </resultMap>
+
+    <select
+        id="selectUserPersonList"
+        parameterType="java.util.Map"
+        resultMap="userPersonResultMap"
+    >
+        <include refid="PageFragment.sortStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.sortEnd"/>
+        <include refid="PageFragment.limitOffset"/>
+    </select>
+
+    <select
+        id="selectUserPersonListCount"
+        parameterType="java.util.Map"
+        resultType="java.lang.Integer"
+    >
+        <include refid="PageFragment.countStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.countEnd"/>
+    </select>
+
+    <select
+        id="selectUserPerson"
+        parameterType="java.util.Map"
+        resultMap="userPersonResultMap"
+    >
+        <include refid="selectFrom"/>
+        WHERE
+            `user_person`.`user_id` = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,164 @@
+<v-container fluid>
+    <v-row dense>
+        <v-col>
+            <h1>사용자 관리</h1>
+        </v-col>
+    </v-row>
+    <v-row dense>
+        <v-col cols="12" sm="6">
+            <v-card>
+                <v-card-title>사용자 목록</v-card-title>
+                <v-card-text>
+                    <div style="max-height: 400px; overflow-y: auto;">
+                        <v-simple-table dense>
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="row">아이디</th>
+                                        <th class="text-center" scope="row">이름</th>
+                                        <th class="text-center" scope="row">상태</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="(item, i) in data.userList"
+                                        :key="item.id"
+                                        class="cursor--pointer"
+                                        @click="clickUser(i)"
+                                    >
+                                        <td class="text-center">{{item.user.username}}</td>
+                                        <td class="text-center">{{item.person.name}}</td>
+                                        <td class="text-center">{{statusNameList[item.user.status]}}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-col>
+        <v-col cols="12" sm="6">
+            <v-card>
+                <v-card-title>사용자 상세</v-card-title>
+                <v-card-text>
+                    <v-form ref="form">
+                        <v-row dense>
+                            <v-col cols="12">
+                                <v-text-field
+                                    autocomplete="off"
+                                    dense
+                                    outlined
+                                    clearable
+                                    label="아이디(필수)"
+                                    :rules="[rules.required]"
+                                    validate-on-blur
+                                    hide-details="auto"
+                                    v-model="data.user.username"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col v-if="!data.user.id" cols="12">
+                                <v-text-field
+                                    autocomplete="new-password"
+                                    dense
+                                    outlined
+                                    clearable
+                                    :type="text.type"
+                                    label="비밀번호(필수)"
+                                    :rules="[rules.required, rules.password]"
+                                    :append-icon="text.icon"
+                                    @click:append="showPassword();"
+                                    validate-on-blur
+                                    hide-details="auto"
+                                    v-model="data.user.password"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                    dense
+                                    outlined
+                                    clearable
+                                    label="이메일(필수)"
+                                    hide-details="auto"
+                                    :rules="[rules.required, rules.email]"
+                                    validate-on-blur
+                                    v-model="data.user.email"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                    dense
+                                    outlined
+                                    clearable
+                                    label="이름(필수)"
+                                    :rules="[rules.required]"
+                                    validate-on-blur
+                                    hide-details="auto"
+                                    v-model="data.person.name"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                        	<v-col cols="12">
+                        		<v-card>
+					                <v-card-title>역할</v-card-title>
+					                <v-card-text>
+					                	<div style="max-height: 500px; overflow-y: auto;">
+						            		<template>
+						            		       <v-data-table
+							                            fixed-header
+							                            hide-default-footer
+							                            height="auto"
+							                            show-select
+							                            v-model="role.roleSelected"
+							                            items-per-page="10000"
+							                            :headers="role.dataTable.headers"
+							                            :items="role.dataTable.items"
+							                        >
+							                        </v-data-table>
+											</template>
+										</div>
+					                </v-card-text>
+					            </v-card>
+					    	</v-col>
+                        </v-row>
+                        <v-row>
+                        	<v-col cols="12" class="d-flex justify-end text-enter">
+                                <v-radio-group
+                                    v-model="data.user.status"
+                                    row
+                                    mandatory
+                                >
+                                    <v-radio
+                                        label="사용"
+                                        value="T"
+                                    ></v-radio>
+                                    <v-radio
+                                        label="회원가입"
+                                        value="F"
+                                    ></v-radio>
+                                    <v-radio
+                                        label="삭제"
+                                        value="D"
+                                    ></v-radio>
+                                </v-radio-group>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" class="text-right">
+                            	<v-btn
+                                    color="secondary"
+                                    @click="data.person = {}; data.user = {}; data.role = {'id': null};"
+                                >신규</v-btn>
+                                <v-btn
+                                    color="primary"
+                                    :loading="btn.saveAccount.loading"
+                                    @click="saveAccount();"
+                                >저장</v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-form>
+                </v-card-text>
+            </v-card>
+        </v-col>
+    </v-row>
+</v-container>

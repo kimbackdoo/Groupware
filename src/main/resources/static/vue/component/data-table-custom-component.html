@@ -1,0 +1,99 @@
+<v-data-table
+    :headers="headers"
+    :items="items"
+    :server-items-length="totalRows"
+    :page.sync="page"
+    :items-per-page.sync="itemsPerPage"
+    :sort-by.sync="sortBy"
+    :sort-desc.sync="sortDesc"
+    :group-by.sync="groupBy"
+    :group-desc.sync="groupDesc"
+    :multi-sort.sync="multiSort"
+    :must-sort.sync="mustSort"
+    :loading="loading"
+    :disable-sort="disabled"
+    mobile-breakpoint="0"
+    hide-default-footer
+>
+    <template v-slot:top>
+    <v-row class="my-1">
+        <v-col class="d-flex justify-start align-center">
+            <div style="width: 200px;">
+                <h3>전체 {{totalRows}}건</h3>
+            </div>
+            <v-btn v-if="!downloadHide" depressed color="primary" class="ml-auto" @click="download">다운로드</v-btn>
+            <div style="width: 130px;" :class="downloadHide ? 'ml-auto' : 'ml-3'">
+                <v-select
+                    dense
+                    outlined
+                    hide-details="auto"
+                    :value="itemsPerPage"
+                    :items="paginationList"
+                    @change="itemsPerPage = $event;"
+                >
+                </v-select>
+            </div>
+        </v-col>
+    </v-row>
+    </template>
+    <template v-if="items.length !== 0" v-slot:body="props">
+            <tbody>
+                <tr v-for="item in props.items" @click="clickRow(item)">
+                    <td :class="'text-'+header.align + ' ' + header.cellClass" v-for="header in headers">
+                        <template v-if="header.cellClass != null && header.cellClass.indexOf('truncate') !== -1">
+                            <template v-if="header.value.toUpperCase().indexOf('TARGET') !== -1">
+                                <v-tooltip top>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <span v-on="on" v-bind="attrs">{{item[header.value]}}</span>
+                                    </template>
+                                    <template v-if="item[header.value]">
+                                        <span v-for="text in item[header.value].split(',')">{{text}}<br/></span>
+                                    </template>
+                                </v-tooltip>
+                            </template>
+                            <template v-else>
+                                <v-tooltip top>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <span v-on="on" v-bind="attrs">{{item[header.value]}}</span>
+                                    </template>
+                                    {{item[header.value]}}
+                                </v-tooltip>
+                            </template>
+                        </template>
+                        <template v-else>
+                            {{item[header.value]}}
+                        </template>
+                    </td>
+                </tr>
+            </tbody>
+    </template>
+    <template v-else v-slot:body>
+        <tbody>
+            <tr>
+                <td v-if="loading" :colspan="headers.length" class="text-center">
+                    <h4 style="opacity: 0.4;">데이터 가져오는 중...</h4>
+                </td>
+                <td v-else :colspan="headers.length" class="text-center">
+                    <div class="py-3">
+                        <v-icon size="200" style="opacity: 0.12;">
+                            mdi-database-remove-outline
+                        </v-icon>
+                        <br>
+                        <h4 style="opacity: 0.4;">데이터가 없습니다.</h4>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </template>
+    <template v-slot:footer >
+        <div class="text-center my-2" >
+            <v-pagination
+                class="d-inline-block"
+                :length="Math.ceil(totalRows / itemsPerPage)"
+                :total-visible="10"
+                v-model="page"
+                :disabled="disabled"
+            ></v-pagination>
+        </div>
+    </template>
+ </v-data-table>

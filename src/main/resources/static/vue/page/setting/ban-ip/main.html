@@ -1,0 +1,48 @@
+<v-container fluid>
+    <v-row dense>
+        <v-col>
+            <h1>밴 IP 관리</h1>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col cols="12">
+            <v-expansion-panels
+                multiple
+                v-model="banIp.panels.list"
+            >
+                <v-expansion-panel>
+                    <v-expansion-panel-header>밴 IP 리스트</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <v-data-table
+                            fixed-header
+                            hide-default-footer
+                            height="auto"
+                            show-select
+                            v-model="banIp.selected"
+                            :headers="banIp.dataTable.headers"
+                            :items="banIp.dataTable.items"
+                            :loading="banIp.dataTable.loading"
+                            :server-items-length="banIp.dataTable.serverItemsLength"
+                            :page.sync="banIp.dataTable.page"
+                            :items-per-page.sync="banIp.dataTable.itemsPerPage"
+                            @page-count="banIp.pagination.length = $event;"
+                            @click:row="handleClick"
+                        >
+                        </v-data-table>
+                        <div>
+                            <v-pagination
+                                :length="banIp.pagination.length"
+                                :total-visible="banIp.pagination.totalVisible"
+                                v-model="banIp.dataTable.page"
+                            ></v-pagination>
+                        </div>
+                        <div class="float-right">
+                            <v-btn depressed color="primary" @click="$router.push('/settings/ban-ip/detail')">등록</v-btn>
+                            <v-btn depressed color="error" @click="deleteBanIPList()">삭제</v-btn>
+                        </div>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+        </v-col>
+    </v-row>
+</v-container>

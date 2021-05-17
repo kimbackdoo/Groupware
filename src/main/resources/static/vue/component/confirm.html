@@ -1,0 +1,24 @@
+<v-dialog
+    scrollable
+    persistent
+    width="450px"
+    v-model="value"
+>
+    <v-card>
+        <v-card-title>확인</v-card-title>
+        <v-card-text style="max-height: 200px;">
+            <div style="white-space: pre-line;">{{ message }}</div>
+        </v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="primary"
+                @click="ok();"
+            >{{oktext}}</v-btn>
+            <v-btn
+                color="secondary"
+                @click="cancel();"
+            >{{canceltext}}</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>
