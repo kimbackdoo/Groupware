@@ -1,0 +1,51 @@
+<v-container fluid>
+    <v-row dense>
+        <v-col>
+            <h1>공지사항</h1>
+        </v-col>
+    </v-row>
+    <v-row dense>
+        <v-col cols="12">
+            <v-card>
+                <v-card-title>공지사항 상세</v-card-title>
+                <v-card-text>
+                    <v-form ref="form">
+                        <v-row dense>
+                            <v-col cols="12">
+                                <v-text-field
+                                    dense
+                                    outlined
+                                    clearable
+                                    label="제목"
+                                    hide-details="auto"
+                                    v-model="data.notice.title"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col>
+                                <v-textarea
+                                    dense
+                                    outlined
+                                    label="내용"
+                                    hide-details="auto"
+                                    v-model="data.notice.contents"
+                                ></v-textarea>
+                            </v-col>
+                        </v-row>
+                        <v-row dense>
+                            <v-col cols="12" class="text-right">
+                                <v-btn
+                                    color="primary"
+                                    @click="saveNotice"
+                                >저장</v-btn>
+                                <v-btn
+                                    color="error"
+                                    @click="initializeNotice"
+                                >초기화</v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-form>
+                </v-card-text>
+            </v-card>
+        </v-col>
+    </v-row>
+</v-container>

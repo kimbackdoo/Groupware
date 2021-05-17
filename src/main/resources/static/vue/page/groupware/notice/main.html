@@ -1,0 +1,35 @@
+<v-container fluid>
+    <v-row dense>
+        <v-col>
+            <h1>공지사항</h1>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col cols="12">
+            <v-expansion-panels
+                multiple
+                v-model="notice.panels.list"
+            >
+                <v-expansion-panel>
+                    <v-expansion-panel-header>공지사항</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <data-table-custom-component
+                            item-key="id"
+                            :headers="dataTable.headers"
+                            :items="dataTable.items"
+                            :totalRows="dataTable.totalRows"
+                            :loading="dataTable.loading"
+                            show-select
+                            import-hide
+                            download-hide
+                            @click:row="setNotice"
+                            @add="$router.push({path: '/groupware/notices/details'})"
+                            @remove="removeNoticeList"
+                            @reload="loadNoticeList"
+                        ></data-table-custom-component>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+        </v-col>
+    </v-row>
+</v-container>

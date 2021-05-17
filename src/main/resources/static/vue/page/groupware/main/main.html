@@ -1,0 +1,122 @@
+<v-container fluid>
+    <v-row dense>
+        <v-col>
+            <h1>일정</h1>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col cols="12">
+            <v-expansion-panels
+                multiple
+                v-model="calendar.panels.list"
+            >
+                <v-expansion-panel>
+                    <v-expansion-panel-header>일정</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <v-toolbar flat>
+                            <v-btn
+                                fab
+                                text
+                                small
+                                color="grey darken-2"
+                                @click="prevCalendar"
+                            >
+                                <v-icon small>
+                                    mdi-chevron-left
+                                </v-icon>
+                            </v-btn>
+                            <v-btn
+                                fab
+                                text
+                                small
+                                color="grey darken-2"
+                                @click="nextCalendar"
+                            >
+                                <v-icon small>
+                                    mdi-chevron-right
+                                </v-icon>
+                            </v-btn>
+                            <v-toolbar-title v-if="$refs.calendar">
+                                {{ $refs.calendar.title }}
+                            </v-toolbar-title>
+                        </v-toolbar>
+                        <div>
+                            <v-calendar
+                                ref="calendar"
+                                v-model="calendar.move"
+                                color="primary"
+                                :events="calendar.events"
+                                @click:event="showEvent"
+                                @click:date="registerNotice"
+                                @change="loadCalendar"
+                            ></v-calendar>
+                            <v-menu
+                                v-model="calendar.selectedOpen"
+                                :close-on-content-click="false"
+                                :activator="calendar.selectedElement"
+                                offset-x
+                            >
+                                <template v-if="calendar.selectedEvent.sep === '휴가'">
+                                    <v-card
+                                        color="grey lighten-4"
+                                        min-width="200px"
+                                        flat
+                                    >
+                                        <v-toolbar
+                                            :color="calendar.selectedEvent.color"
+                                            dark
+                                        >
+                                            <v-toolbar-title v-html="calendar.selectedEvent.name"></v-toolbar-title>
+                                            <v-spacer></v-spacer>
+                                        </v-toolbar>
+                                        <v-card-text>
+                                            <span>구분 : </span>
+                                            <span v-html="calendar.selectedEvent.type"></span><br/>
+                                            <span>기간 : </span>
+                                            <span v-html="calendar.selectedEvent.term"></span>
+                                        </v-card-text>
+                                    </v-card>
+                                </template>
+                                <template v-else-if="calendar.selectedEvent.sep === '공지사항'">
+                                    <v-card
+                                        color="grey lighten-4"
+                                        min-width="200px"
+                                        flat
+                                    >
+                                        <v-toolbar
+                                            :color="calendar.selectedEvent.color"
+                                            dark
+                                        >
+                                            <v-toolbar-title v-html="calendar.selectedEvent.name"></v-toolbar-title>
+                                            <v-spacer></v-spacer>
+                                        </v-toolbar>
+                                        <v-card-text>
+                                            <span>기간 : </span>
+                                            <span v-html="calendar.selectedEvent.term"></span><br/>
+                                            <span>내용 : </span>
+                                            <span v-html="calendar.selectedEvent.contents"></span>
+                                        </v-card-text>
+                                    </v-card>
+                                </template>
+                            </v-menu>
+                        </div>
+                        <div class="text-right mt-2">
+                            <v-btn
+                                class="mr-2"
+                                @click="expenditureDownload"
+                            >지출결의서 다운로드</v-btn>
+                            <v-btn
+                                color="primary"
+                                @click="openVacationDialog"
+                            >휴가 신청하기</v-btn>
+                        </div>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+        </v-col>
+    </v-row>
+    <vacation-dialog-component
+        :dialog="dialogVacation"
+        @save="saveNotice"
+    ></vacation-dialog-component>
+</v-container>

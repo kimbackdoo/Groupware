@@ -1,0 +1,53 @@
+<v-container fluid style="height: 100%;">
+    <v-row dense style="height: 100%">
+        <v-col class="d-flex justify-center align-center">
+            <v-card width="400px" style="text-align: center;">
+                <v-card-title>{{ vacation.name }}님의 휴가 요청서</v-card-title>
+                <v-card-text>
+                    <table class="ma-auto pt-8 pb-8">
+                        <tb>
+                            <tr>
+                                <td class="pr-15">부서</td>
+                                <td>{{ vacation.department }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-15">성명</td>
+                                <td>{{ vacation.name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-15">비상연락망</td>
+                                <td>{{ vacation.emergencyNum }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-15">구분</td>
+                                <td>{{ vacation.type }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-15">인수인계자</td>
+                                <td>{{ vacation.takingUser }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-15">기간</td>
+                                <td>{{ vacation.term }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-15">세부사항</td>
+                                <td>{{ vacation.detail }}</td>
+                            </tr>
+                        </tb>
+                    </table>
+                    <div style="text-align: right;">
+                        <v-btn
+                            class="primary"
+                            @click="saveApproval"
+                        >승인</v-btn>
+                        <v-btn
+                            class="error"
+                            @click="rejectApproval"
+                        >거절</v-btn>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-col>
+    </v-row>
+</v-container>

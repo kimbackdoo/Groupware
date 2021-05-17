@@ -9,9 +9,40 @@ router = new VueRouter({
             "component": MainLayout,
             "children": [
                 {
-                    "name": "메인화면",
+                    "name": "그룹웨어화면",
                     "path": "/main",
-                    "component": MainPage
+                },
+
+                // 그룹웨어 메뉴
+                {
+                    "name": "GroupwareMenu",
+                    "path": "/groupware",
+                    "redirect": "/groupware/main"
+                },
+                {
+                    "name": "GroupwareInfo",
+                    "path": "/groupware/main",
+                    "component": GroupwareMainPage
+                },
+                {
+                    "name": "GroupwareNotices",
+                    "path": "/groupware/notices",
+                    "component": GroupwareNoticePage
+                },
+                {
+                    "name": "GroupwareNoticeDetails",
+                    "path": "/groupware/notices/details",
+                    "component": GroupwareNoticeDetailPage
+                },
+                {
+                    "name": "GroupwareApprovalList",
+                    "path": "/groupware/approval-list",
+                    "component": GroupwareApprovalListPage
+                },
+                {
+                    "name": "GroupwareApproval",
+                    "path": "/groupware/approval",
+                    "component": GroupwareApprovalPage
                 },
                 {
                     "name": "Settings",
@@ -133,7 +164,11 @@ router.beforeEach(async function (to, from, next) {
         if (to.path === "/sign-in" || to.path === "/sign-up") {
             next();
         } else {
-            next("/sign-in");
+            if(_.isEmpty(to.query)) {
+                next("/sign-in");
+            } else {
+                next("/sign-in?from=" + to.fullPath);
+            }
         }
     }
 });
