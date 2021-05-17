@@ -260,7 +260,6 @@ metaGroupware = {
                 "removeNotice": function (id) { return axios({"url": "/api/app/notices/"+ id, "method": "delete"}); },
             },
             "vacationDownload": {
-                "getVacationDataXlsx": function (params) {return axios({"url": "/api/app/vacationDataXlsx", "method":"get", "params": params}); },
                 "downloadVacationXlsx": async function (params){
                     var a,data,url;
                     data = (await axios({
