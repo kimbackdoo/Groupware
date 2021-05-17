@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.metasoft.groupware.api.common.mapper.VacationMapper">
+
+    <sql id="selectFrom">
+        SELECT
+            `vacation`.`id`,
+            `vacation`.`user_id`,
+            `vacation`.`taking_user`,
+            `vacation`.`department`,
+            `vacation`.`emergency_num`,
+            `vacation`.`type`,
+            `vacation`.`sterm`,
+            `vacation`.`eterm`,
+            `vacation`.`detail`,
+            `vacation_approval`.`team_leader` AS `vacation_approval_team_leader`,
+            `vacation_approval`.`director` AS `vacation_approval_director`,
+            `vacation_approval`.`president` AS `vacation_approval_president`,
+            `vacation_approval`.`step` AS `vacation_approval_step`
+        FROM
+            `tb_vacation` `vacation`
+        LEFT OUTER JOIN
+            `tb_approval` `vacation_approval`
+        ON
+            `vacation`.`id` = `vacation_approval`.`vacation_id`
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="vacationParamDto.sterm != null">
+                    AND `sterm` &gt;= #{vacationParamDto.sterm}
+            </if>
+            <if test="vacationParamDto.eterm != null">
+                    AND `eterm` &lt;= #{vacationParamDto.eterm}
+            </if>
+           <if test="vacationParamDto.step != null">
+               AND `vacation_approval`.`step` &lt; #{vacationParamDto.step}
+           </if>
+        </where>
+    </sql>
+
+    <resultMap id="vacationResultMap" type ="kr.co.metasoft.groupware.api.common.entity.VacationEntity" >
+        <result property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="takingUser" column="taking_user" />
+        <result property="department" column="department" />
+        <result property="emergencyNum" column="emergency_num" />
+        <result property="type" column="type" />
+        <result property="sterm" column="sterm" />
+        <result property="eterm" column="eterm" />
+        <result property="detail" column="detail" />
+        <result property="teamLeader" column="vacation_approval_team_leader" />
+        <result property="director" column="vacation_approval_director" />
+        <result property="president" column="vacation_approval_president" />
+        <result property="step" column="vacation_approval_step" />
+    </resultMap>
+
+    <select
+        id="selectVacationList"
+        parameterType="java.util.Map"
+        resultMap="vacationResultMap"
+    >
+        <include refid="PageFragment.sortStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.sortEnd"/>
+        <include refid="PageFragment.limitOffset"/>
+    </select>
+
+    <select
+        id="selectVacationListCount"
+        parameterType="java.util.Map"
+        resultType="java.lang.Integer"
+    >
+        <include refid="PageFragment.countStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.countEnd"/>
+    </select>
+
+    <select
+        id="selectVacation"
+        parameterType="java.util.Map"
+        resultMap="vacationResultMap"
+    >
+        <include refid="selectFrom" />
+        WHERE
+            `vacation`.`id` = #{id}
+    </select>
+</mapper>

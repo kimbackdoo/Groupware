@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.metasoft.groupware.api.common.mapper.ApprovalMapper">
+
+    <sql id="selectFrom">
+        SELECT
+            `approval`.`id`,
+            `approval`.`vacation_id`,
+            `approval`.`step`,
+            `approval`.`team_leader`,
+            `approval`.`director`,
+            `approval`.`president`,
+            `approval`.`approval_date`
+        FROM
+            `tb_approval` `approval`
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="approvalParamDto.vacationId != null">
+                AND `approval`.`vacation_id` = #{approvalParamDto.vacationId}
+            </if>
+            <if test="approvalParamDto.step != null">
+                AND `approval`.`step` = #{approvalParamDto.step}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="where1">
+        <where>
+            <if test="vacationId != null">
+                AND `approval`.`vacation_id` = #{vacationId}
+            </if>
+        </where>
+    </sql>
+
+
+
+
+    <resultMap id="approvalResultMap" type ="kr.co.metasoft.groupware.api.common.entity.ApprovalEntity" >
+        <result property="id" column="id" />
+        <result property="vacationId" column="vacation_id" />
+        <result property="step" column="step" />
+        <result property="teamLeader" column="team_leader" />
+        <result property="director" column="director" />
+        <result property="president" column="president" />
+        <result property="approvalDate" column="approval_date" />
+    </resultMap>
+
+    <select
+        id="selectApprovalList"
+        parameterType="java.util.Map"
+        resultMap="approvalResultMap"
+    >
+        <include refid="PageFragment.sortStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.sortEnd"/>
+        <include refid="PageFragment.limitOffset"/>
+    </select>
+
+    <select
+        id="selectApprovalListCount"
+        parameterType="java.util.Map"
+        resultType="java.lang.Integer"
+    >
+        <include refid="PageFragment.countStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.countEnd"/>
+    </select>
+
+
+    <select
+        id="selectApproval"
+        parameterType="java.util.Map"
+        resultMap="approvalResultMap"
+    >
+        <include refid="selectFrom" />
+        WHERE
+            `approval`.`vacation_id` = #{vacationId}
+    </select>
+
+
+
+
+
+</mapper>

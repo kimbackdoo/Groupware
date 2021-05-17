@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.metasoft.groupware.api.common.mapper.NoticeMapper">
+
+    <sql id="selectFrom">
+        SELECT
+            `notice`.`id`,
+            `notice`.`user_id`,
+            `notice`.`title`,
+            `notice`.`contents`,
+            `notice`.`posting_date`,
+            `notice`.`created_date`
+        FROM
+            `tb_notice` `notice`
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="noticeParamDto.postingDate != null" >
+                AND mid(`notice`.`posting_date`,6,2) = mid(#{noticeParamDto.postingDate}, 6,2)
+            </if>
+        </where>
+    </sql>
+
+    <resultMap id="noticeResultMap" type ="kr.co.metasoft.groupware.api.common.entity.NoticeEntity" >
+        <result property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="title" column="title" />
+        <result property="contents" column="contents" />
+        <result property="postingDate" column="posting_date" />
+        <result property="createdDate" column="created_date" />
+    </resultMap>
+
+    <select
+            id="selectNoticeList"
+            parameterType="java.util.Map"
+            resultMap="noticeResultMap"
+    >
+        <include refid="PageFragment.sortStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.sortEnd"/>
+        <include refid="PageFragment.limitOffset"/>
+    </select>
+
+    <select
+            id="selectNoticeListCount"
+            parameterType="java.util.Map"
+            resultType="java.lang.Integer"
+    >
+
+        <include refid="PageFragment.countStart"/>
+        <include refid="selectFrom"/>
+        <include refid="where"/>
+        <include refid="PageFragment.countEnd"/>
+    </select>
+
+
+    <select
+            id="selectNotice"
+            parameterType="java.util.Map"
+            resultMap="noticeResultMap"
+    >
+        <include refid="selectFrom" />
+        WHERE
+        `notice`.`id` = #{id}
+    </select>
+</mapper>
