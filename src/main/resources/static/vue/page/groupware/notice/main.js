@@ -36,10 +36,10 @@ GroupwareNoticePage = Vue.component('groupware-notice-page', async function (res
                 let self = this, noticeList;
 
                 self.dataTable.loading = true;
-                noticeList = (await ito.api.app.notice.getNoticeList({
+                noticeList = (await metaGroupware.api.common.notice.getNoticeList({
                     "page": options !== undefined ? options.page : 1,
                     "rowSize": options !== undefined ? options.itemsPerPage : 10,
-                    "sort": options !== undefined ? ito.util.sort(options.sortBy, options.sortDesc) : [],
+                    "sort": options !== undefined ? metaGroupware.util.sort(options.sortBy, options.sortDesc) : [],
                 })).data;
 
                 self.dataTable.totalRows = noticeList.totalRows;
@@ -56,10 +56,10 @@ GroupwareNoticePage = Vue.component('groupware-notice-page', async function (res
             },
             "removeNoticeList": async function(data) {
                 if(data.length === 0) {
-                    await ito.alert("삭제할 데이터를 선택해주세요.");
-                } else if(await ito.confirm("삭제하시겠습니까?")) {
-                    await ito.api.app.notice.removeNoticeList(data.map(e=>e.id));
-                    await ito.alert("삭제했습니다.");
+                    await metaGroupware.alert("삭제할 데이터를 선택해주세요.");
+                } else if(await metaGroupware.confirm("삭제하시겠습니까?")) {
+                    await metaGroupware.api.common.notice.removeNoticeList(data.map(e=>e.id));
+                    await metaGroupware.alert("삭제했습니다.");
                     await this.loadNoticeList();
                 }
             },

@@ -41,16 +41,16 @@ GroupwareApprovalListPage = Vue.component('groupware-approval-list-page', async 
                 let self = this, vacationId, vacation, userName, approvalList;
 
                 self.dataTable.loading = true;
-                approvalList = (await ito.api.app.approval.getApprovalList({
+                approvalList = (await metaGroupware.api.common.approval.getApprovalList({
                     "page": options !== undefined ? options.page : 1,
                     "rowSize": options !== undefined ? options.itemsPerPage : 10,
-                    "sort": options !== undefined ? ito.util.sort(options.sortBy, options.sortDesc) : [],
+                    "sort": options !== undefined ? metaGroupware.util.sort(options.sortBy, options.sortDesc) : [],
                 })).data;
 
                 for(let i=0; i<approvalList.items.length; i++) {
                     vacationId = approvalList.items[i].vacationId;
-                    vacation = (await ito.api.app.vacation.getVacationInfo(vacationId)).data;
-                    userName = (await ito.api.common.user.getUser(vacation.userId)).data.username;
+                    vacation = (await metaGroupware.api.common.vacation.getVacationInfo(vacationId)).data;
+                    userName = (await metaGroupware.api.common.user.getUser(vacation.userId)).data.username;
 
                     approvalList.items[i].name = userName;
                     approvalList.items[i].term = vacation.sterm + " ~ " + vacation.eterm;
@@ -82,13 +82,13 @@ GroupwareApprovalListPage = Vue.component('groupware-approval-list-page', async 
             "vacationDownload": async function(data) {
                 let step = data.item.step, vacationId = data.item.vacationId;
                 if(step !== 3) {
-                    await ito.alert("모든 승인이 되지 않았습니다.");
+                    await metaGroupware.alert("모든 승인이 되지 않았습니다.");
                 } else {
-                    await ito.api.app.vacationDownload.downloadVacationXlsx({
+                    await metaGroupware.api.common.vacationDownload.downloadVacationXlsx({
                         "id": vacationId,
                         "takingUser": ""
                     });
-                    await ito.alert("다운로드를 완료하였습니다.");
+                    await metaGroupware.alert("다운로드를 완료하였습니다.");
                 }
             }
         },

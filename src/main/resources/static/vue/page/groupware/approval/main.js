@@ -13,8 +13,8 @@ GroupwareApprovalPage = Vue.component('groupware-approval-page', async function(
            },
            "loadVacation": async function() {
                let userName, vacation, vacationId = this.$route.query.vacationId;
-               vacation = (await ito.api.app.vacation.getVacationInfo(vacationId)).data;
-               userName = (await ito.api.common.user.getUser(vacation.userId)).data.username;
+               vacation = (await metaGroupware.api.common.vacation.getVacationInfo(vacationId)).data;
+               userName = (await metaGroupware.api.common.user.getUser(vacation.userId)).data.username;
 
                this.vacation = vacation;
                this.vacation.name = userName;
@@ -30,14 +30,14 @@ GroupwareApprovalPage = Vue.component('groupware-approval-page', async function(
            "saveApproval": async function() {
                let userId, userName, vacationId, role = this.$route.query.role;
                vacationId = this.$route.query.vacationId;
-               userId = (await ito.api.app.vacation.getVacationInfo(vacationId)).data.userId;
-               userName = (await ito.api.common.user.getUser(userId)).data.username;
+               userId = (await metaGroupware.api.common.vacation.getVacationInfo(vacationId)).data.userId;
+               userName = (await metaGroupware.api.common.user.getUser(userId)).data.username;
 
-               if(await ito.confirm("승인하시겠습니까?")) {
+               if(await metaGroupware.confirm("승인하시겠습니까?")) {
                    switch (role) {
                        case "ROLE_EMPLOYEE":
-                           await ito.api.app.approval.modifyApproval(vacationId, {"teamLeader": "T"});
-                           await ito.api.app.mailSend.getMailSend({
+                           await metaGroupware.api.common.approval.modifyApproval(vacationId, {"teamLeader": "T"});
+                           await metaGroupware.api.common.mailSend.getMailSend({
                                "to": "dbwlgna98@naver.com",
                                "subject": userName + "님의 휴가신청서",
                                "text": "<a href=http://localhost:81/groupware/approval?vacationId=" + vacationId + "&role=ROLE_TEAMLEADER>" +
@@ -46,8 +46,8 @@ GroupwareApprovalPage = Vue.component('groupware-approval-page', async function(
                            });
                            break;
                        case "ROLE_TEAMLEADER":
-                           await ito.api.app.approval.modifyApproval(vacationId, {"director": "T"});
-                           await ito.api.app.mailSend.getMailSend({
+                           await metaGroupware.api.common.approval.modifyApproval(vacationId, {"director": "T"});
+                           await metaGroupware.api.common.mailSend.getMailSend({
                                "to": "dbwlgna98@naver.com",
                                "subject": userName + "님의 휴가신청서",
                                "text": "<a href=http://localhost:81/groupware/approval?vacationId=" + vacationId + "&role=ROLE_DIRECTOR>" +
@@ -56,23 +56,23 @@ GroupwareApprovalPage = Vue.component('groupware-approval-page', async function(
                            });
                            break;
                        case "ROLE_DIRECTOR":
-                           await ito.api.app.approval.modifyApproval(vacationId, {
+                           await metaGroupware.api.common.approval.modifyApproval(vacationId, {
                                "president": "T",
                                "aprrovalDate": moment().format("YYYY-MM-DD")
                            });
-                           await ito.api.app.mailSend.getMailSend({
+                           await metaGroupware.api.common.mailSend.getMailSend({
                                "to": "kdk7121743@naver.com",
                                "subject": userName + "님의 휴가신청서",
                                "text": userName + "님의 휴가가 최종 승인되었습니다.",
                            });
                            break;
                    }
-                   await ito.alert("승인되었습니다.");
+                   await metaGroupware.alert("승인되었습니다.");
                }
            },
            "rejectApproval": async function() {
-               if(await ito.confirm("거절하시겠습니까?")) {
-                   await ito.alert("거절되었습니다.");
+               if(await metaGroupware.confirm("거절하시겠습니까?")) {
+                   await metaGroupware.alert("거절되었습니다.");
                    this.$router.push({
                        "path": "/groupware/main"
                    });

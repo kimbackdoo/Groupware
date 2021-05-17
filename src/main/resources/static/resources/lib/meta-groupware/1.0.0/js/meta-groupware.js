@@ -192,7 +192,7 @@ metaGroupware = {
                 "removeRoleUserList": function (data) { return axios({"url": "/api/common/role-users", "method": "delete", "data": data}); },
                 "removeRoleUser": function (roleId, userId) { return axios({"url": "/api/common/role-users/"+ roleId + "," + userId, "method": "delete"}); },
                 "updateRoleUser": function(data) {return axios({"url": "/api/common/role-users"+"/updateRoleUser", "method": "put"});  }
-},
+            },
             "user": {
                 "getUserList": function (params) { return axios({"url": "/api/common/users", "method": "get", "params": params}); },
                 "getUser": function (id) { return axios({"url": "/api/common/users/" + id, "method": "get"}); },
@@ -234,6 +234,68 @@ metaGroupware = {
                 "removeBanIPList": function (data) { return axios({"url": "/api/common/banIPs", "method": "delete", "data": data}); },
                 "removeBanIP": function (id) { return axios({"url": "/api/common/banIPs/"+ id, "method": "delete"}); }
             },
+            // 그룹웨어 관련 API
+            "vacation": {
+                "getVacationList": function (params) {return axios({"url": "/api/app/vacations", "method": "get", "params":params}); },
+                "getVacationInfo": function (id) {return axios({"url": "/api/app/vacations/"+id, "method": "get"}); },
+                "createVacation": function (data) { return axios({"url": "/api/app/vacations", "method": "post", "data": data}); },
+                "modifyVacation": function (id, data) { return axios({"url": "/api/app/vacations/" + id, "method": "put", "data": data}); },
+                "removeVacationList": function (data) { return axios({"url": "/api/app/vacations", "method": "delete", "data": data}); },
+                "removeVacation": function (id) { return axios({"url": "/api/app/vacations/"+ id, "method": "delete"}); },
+            },
+            "approval": {
+                "getApprovalList": function (params) {return axios({"url": "/api/app/approvals", "method": "get", "params":params}); },
+                "getApproval": function (id) {return axios({"url": "/api/app/approvals/"+id, "method": "get" }); },
+                "createApproval": function (data) { return axios({"url": "/api/app/approvals", "method": "post", "data": data}); },
+                "modifyApproval": function (id, data) { return axios({"url": "/api/app/approvals/" + id, "method": "put", "data": data}); },
+                "removeApprovalList": function (data) { return axios({"url": "/api/app/approvals", "method": "delete", "data": data}); },
+                "removeApproval": function (id) { return axios({"url": "/api/app/approvals/"+ id, "method": "delete"}); },
+            },
+            "notice": {
+                "getNoticeList": function (params) {return axios({"url": "/api/app/notices", "method": "get", "params":params}); },
+                "getNotice": function (id) {return axios({"url": "/api/app/notices/"+id, "method": "get"}); },
+                "createNotice": function (data) { return axios({"url": "/api/app/notices", "method": "post", "data": data}); },
+                "modifyNotice": function (id, data) { return axios({"url": "/api/app/notices/" + id, "method": "put", "data": data}); },
+                "removeNoticeList": function (data) { return axios({"url": "/api/app/notices", "method": "delete", "data": data}); },
+                "removeNotice": function (id) { return axios({"url": "/api/app/notices/"+ id, "method": "delete"}); },
+            },
+            "vacationDownload": {
+                "getVacationDataXlsx": function (params) {return axios({"url": "/api/app/vacationDataXlsx", "method":"get", "params": params}); },
+                "downloadVacationXlsx": async function (params){
+                    var a,data,url;
+                    data = (await axios({
+                        "url": "/api/app/vacationDataXlsx",
+                        "method":"get",
+                        "responseType": "blob",
+                        "params": params
+                    })).data;
+                    url = window.URL.createObjectURL(data);
+                    a = document.createElement("a");
+                    a.setAttribute("href",url);
+                    a.setAttribute("download", "휴가신청서.xlsx");
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+            },
+            "expenditureDownload": {
+                "downloadExpenditureXlsx": async function (){
+                    var a,data,url;
+                    data = (await axios({
+                        "url": "/api/app/expenditureXlsx",
+                        "method":"get",
+                        "responseType": "blob"
+                    })).data;
+                    url = window.URL.createObjectURL(data);
+                    a = document.createElement("a");
+                    a.setAttribute("href",url);
+                    a.setAttribute("download", "지출결의서.xlsx");
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+            },
+            "mailSend": {
+                "getMailSend": function (params) {return axios({"url": "/api/app/mails", "method": "get", "params":params}); },
+            }
         },
         "app": {
             "account": {
