@@ -5,12 +5,12 @@ router = new VueRouter({
         {
             "name": "Application",
             "path": "/",
-            "redirect": "/main",
+            "redirect": "/groupware",
             "component": MainLayout,
             "children": [
                 {
                     "name": "그룹웨어화면",
-                    "path": "/main",
+                    "path": "/groupware",
                 },
 
                 // 그룹웨어 메뉴
@@ -122,7 +122,7 @@ router.beforeEach(async function (to, from, next) {
         title,
         titlePath,
         i;
-    mainTitle = "Meta-OJT";
+    mainTitle = "Meta-Groupware";
     regex = to.matched.length > 0 ? to.matched[to.matched.length - 1].regex : null;
 
     token = metaojt.auth.getToken();
