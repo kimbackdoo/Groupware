@@ -53,7 +53,7 @@ GroupwareMainPage = Vue.component('groupware-main-page', async function (resolve
             "getVacationList": async function({start, end}) {
                 let userName, color, step, vacationList;
                 vacationList = (await metaGroupware.api.common.vacation.getVacationList({
-                    "rowSize": 100000000,
+                    "rowSize": 10000000,
                     "sterm": start.date,
                     "eterm": end.date
                 })).data.items;
@@ -96,7 +96,7 @@ GroupwareMainPage = Vue.component('groupware-main-page', async function (resolve
             "getNoticeList": async function ({start}) {
                 let noticeList;
                 noticeList = (await metaGroupware.api.common.notice.getNoticeList({
-                    "rowSize": 100000000,
+                    "rowSize": 10000000,
                     "postingDate": start.date,
                 })).data.items;
 
@@ -112,7 +112,7 @@ GroupwareMainPage = Vue.component('groupware-main-page', async function (resolve
                 }
             },
             "saveNotice": async function(data) {
-                let vacation, roleValue, start={}, end={};
+                let vacation, roleValue;
                 data.userId = store.state.app.user.id;
 
                 if(await metaGroupware.confirm("저장하시겠습니까?")) {
