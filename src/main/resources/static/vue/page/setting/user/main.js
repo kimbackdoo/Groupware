@@ -67,7 +67,7 @@ SettingUserMainPage = Vue.component("setting-user-main-page", async function (re
     "methods": {
         "loadUserList": async function () {
             var userPersonList;
-            userPersonList = (await metaojt.api.common.userPerson.getUserPersonList({
+            userPersonList = (await metaGroupware.api.common.userPerson.getUserPersonList({
                 "page": 1,
                 "rowSize": 100000000
             })).data.items;
@@ -76,7 +76,7 @@ SettingUserMainPage = Vue.component("setting-user-main-page", async function (re
         },
         "loadRoleList": async function () {
             var roleList;
-            roleList = (await metaojt.api.common.role.getRoleList({
+            roleList = (await metaGroupware.api.common.role.getRoleList({
                 "page": 1,
                 "rowSize": 100000000
             })).data.items;
@@ -88,13 +88,13 @@ SettingUserMainPage = Vue.component("setting-user-main-page", async function (re
             let roleList;
             this.data.person = this.data.userList[i].person;
             this.data.user = this.data.userList[i].user;
-            roleList = (await metaojt.api.common.roleUser.getRoleUserList({"userId": this.data.user.id})).data.items;
+            roleList = (await metaGroupware.api.common.roleUser.getRoleUserList({"userId": this.data.user.id})).data.items;
 			this.role.roleSelected = [];
 			for(var i=0; i<roleList.length; i++)
 				this.role.roleSelected.push(roleList[i].role);
         },
         "existUsername": async function (username) {
-            return (await metaojt.api.common.user.getUserList({"username": username, "rowSize": 1})).data.items.length > 0 && !this.data.user.id ? true : false;
+            return (await metaGroupware.api.common.user.getUserList({"username": username, "rowSize": 1})).data.items.length > 0 && !this.data.user.id ? true : false;
         },
 		"saveAccount": async function () {
             let user, person, selectedRoleList, account, validate;
@@ -105,16 +105,16 @@ SettingUserMainPage = Vue.component("setting-user-main-page", async function (re
             this.btn.saveAccount.loading = true;
             validate = this.$refs.form.validate();
             if (!validate) {
-                await metaojt.alert("유효한 값을 작성해주세요.");
+                await metaGroupware.alert("유효한 값을 작성해주세요.");
             } else if (await this.existUsername(user.username)) {
-                await metaojt.alert("동일한 아이디가 존재합니다.");
-            } else if (await metaojt.confirm("저장 하시겠습니까?")) {
+                await metaGroupware.alert("동일한 아이디가 존재합니다.");
+            } else if (await metaGroupware.confirm("저장 하시겠습니까?")) {
                 if (user.id && person.id) {
-                    await metaojt.api.app.account.modifyAccount({"userDto": user, "personDto": person, "roleId": selectedRoleList});
+                    await metaGroupware.api.app.account.modifyAccount({"userDto": user, "personDto": person, "roleId": selectedRoleList});
                 } else {
-                    account = (await metaojt.api.app.account.createAccount({"userDto": user, "personDto": person, "roleId": selectedRoleList})).data;
+                    account = (await metaGroupware.api.app.account.createAccount({"userDto": user, "personDto": person, "roleId": selectedRoleList})).data;
                 }
-                await metaojt.alert("저장 되었습니다.");
+                await metaGroupware.alert("저장 되었습니다.");
                 await this.loadUserList();
             }
             this.btn.saveAccount.loading = false;
@@ -124,12 +124,12 @@ SettingUserMainPage = Vue.component("setting-user-main-page", async function (re
             this.btn.saveAccount.loading = true;
             validate = this.$refs.form.validate();
             if (!validate) {
-                await metaojt.alert("유효한 값을 작성해주세요.");
-            } else if (await metaojt.confirm("저장 하시겠습니까?")) {
+                await metaGroupware.alert("유효한 값을 작성해주세요.");
+            } else if (await metaGroupware.confirm("저장 하시겠습니까?")) {
 	
 				
-				await metaojt.api.common.roleUser.updateRoleUser({"userId": user.id, "roleId": selectedRoleList.id});
-                await metaojt.alert("저장 되었습니다.");
+				await metaGroupware.api.common.roleUser.updateRoleUser({"userId": user.id, "roleId": selectedRoleList.id});
+                await metaGroupware.alert("저장 되었습니다.");
                 await this.loadUserList();
             }
             this.btn.saveAccount.loading = false;

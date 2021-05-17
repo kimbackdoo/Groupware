@@ -59,7 +59,7 @@ SettingBanIPMainPage = Vue.component("setting-banIp-main-page", async function (
                                     "rowSize": self.banIp.dataTable.itemsPerPage
                                 };
                             self.banIp.dataTable.loading = true;
-                            return metaojt.api.common.banIP.getBanIPList(params);
+                            return metaGroupware.api.common.banIP.getBanIPList(params);
                         })
                         .then(function (response) {
 
@@ -75,7 +75,7 @@ SettingBanIPMainPage = Vue.component("setting-banIp-main-page", async function (
             "deleteBanIPList" : async function() {
                 var self = this;
 
-                if (await metaojt.confirm("삭제 하시겠습니까?")) {
+                if (await metaGroupware.confirm("삭제 하시겠습니까?")) {
                     var selectedBanIP = self.banIp.selected;
 
               
@@ -86,10 +86,10 @@ SettingBanIPMainPage = Vue.component("setting-banIp-main-page", async function (
                     
   
 
-                    (await metaojt.api.common.banIP.removeBanIPList(idList));
+                    (await metaGroupware.api.common.banIP.removeBanIPList(idList));
 
 
-                    await metaojt.alert('삭제에 성공했습니다.');
+                    await metaGroupware.alert('삭제에 성공했습니다.');
                     this.setBanIPList();
                 }
 

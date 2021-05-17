@@ -125,10 +125,10 @@ router.beforeEach(async function (to, from, next) {
     mainTitle = "Meta-Groupware";
     regex = to.matched.length > 0 ? to.matched[to.matched.length - 1].regex : null;
 
-    token = metaojt.auth.getToken();
-    if (await metaojt.auth.authenticated(token)) {
+    token = metaGroupware.auth.getToken();
+    if (await metaGroupware.auth.authenticated(token)) {
         if (!store.state.app.token) {
-            metaojt.auth.authorize(token);
+            metaGroupware.auth.authorize(token);
         }
         treeMenuList = store.state.app.treeMenuList;
         authenticated = false;
@@ -160,7 +160,7 @@ router.beforeEach(async function (to, from, next) {
         titlePath = [subTitle, mainTitle];
         title = titlePath.join(" < ");
         document.title = title;
-        metaojt.auth.unauthorize();
+        metaGroupware.auth.unauthorize();
         if (to.path === "/sign-in" || to.path === "/sign-up") {
             next();
         } else {

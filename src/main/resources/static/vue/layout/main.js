@@ -26,8 +26,8 @@ MainLayout = Vue.component("main-layout", async function (resolve) { resolve({
     "methods": {
         "logout": async function () {
             var token;
-            token = metaojt.auth.getToken();
-            await metaojt.auth.logout(token);
+            token = metaGroupware.auth.getToken();
+            await metaGroupware.auth.logout(token);
             this.$router.replace("/sign-in");
         }
     }

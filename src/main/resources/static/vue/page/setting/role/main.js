@@ -59,7 +59,7 @@ SettingRoleMainPage = Vue.component("setting-role-main-page", async function (re
                                     "rowSize": self.role.dataTable.itemsPerPage
                                 };
                             self.role.dataTable.loading = true;
-                            return metaojt.api.common.role.getRoleList(params);
+                            return metaGroupware.api.common.role.getRoleList(params);
                         })
                         .then(function (response) {
 
@@ -74,7 +74,7 @@ SettingRoleMainPage = Vue.component("setting-role-main-page", async function (re
             "deleteRoleList" : async function() {
                 var self = this;
 
-                if (await metaojt.confirm("삭제 하시겠습니까?")) {
+                if (await metaGroupware.confirm("삭제 하시겠습니까?")) {
                     var selectedRole = self.role.selected;
 
 
@@ -87,10 +87,10 @@ SettingRoleMainPage = Vue.component("setting-role-main-page", async function (re
                             alert('기초 권한(관리자,사용자)는 삭제할수 없습니다.');
                     }
 
-                    (await metaojt.api.common.role.removeRoleAllDependencyList(idList));
+                    (await metaGroupware.api.common.role.removeRoleAllDependencyList(idList));
 
 
-                    await metaojt.alert('삭제에 성공했습니다.');
+                    await metaGroupware.alert('삭제에 성공했습니다.');
                     this.setRoleList();
                 }
 

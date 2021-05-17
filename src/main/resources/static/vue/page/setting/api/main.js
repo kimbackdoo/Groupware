@@ -58,7 +58,7 @@ SettingApiMainPage = Vue.component("setting-api-main-page", async function (reso
                             };
 
                             self.api.dataTable.loading = true;
-                            return metaojt.api.common.api.getApiList(param);
+                            return metaGroupware.api.common.api.getApiList(param);
                         })
                         .then(function (response) {
                             var data = response.data;
@@ -73,7 +73,7 @@ SettingApiMainPage = Vue.component("setting-api-main-page", async function (reso
             "deleteApiList" : async function() {
                 var self = this;
 
-                if (await metaojt.confirm("삭제 하시겠습니까?")) {
+                if (await metaGroupware.confirm("삭제 하시겠습니까?")) {
                     var selectedApi = self.api.selected;
 
 
@@ -83,12 +83,12 @@ SettingApiMainPage = Vue.component("setting-api-main-page", async function (reso
                         if(parseInt(selectedApi[i].id) > 9)
                             idList.push(selectedApi[i].id);
                         else
-                            await metaojt.alert('기초 API는 삭제할수 없습니다.');
+                            await metaGroupware.alert('기초 API는 삭제할수 없습니다.');
                     }
-                    (await metaojt.api.common.api.removeApiList(idList));
+                    (await metaGroupware.api.common.api.removeApiList(idList));
 
 
-                    await metaojt.alert('삭제에 성공했습니다.');
+                    await metaGroupware.alert('삭제에 성공했습니다.');
                     this.setApiList();
                 }
 

@@ -47,7 +47,7 @@ SettingMenuMainPage = Vue.component("setting-menu-main-page", async function (re
     "methods": {
         "loadTreeMenuList": async function () {
             var treeMenuList;
-            treeMenuList = (await metaojt.api.util.menu.getTreeMenuList({
+            treeMenuList = (await metaGroupware.api.util.menu.getTreeMenuList({
                 "page": 1,
                 "rowSize": 100000000,
                 "sort": ["rankingPath,asc"]
@@ -58,13 +58,13 @@ SettingMenuMainPage = Vue.component("setting-menu-main-page", async function (re
             var menu;
             menu = this.data.menu;
             this.btn.saveMenu.loading = true;
-            if (await metaojt.confirm("저장 하시겠습니까?")) {
+            if (await metaGroupware.confirm("저장 하시겠습니까?")) {
                 if (menu.id) {
-                    menu = (await metaojt.api.common.menu.modifyMenu(menu.id, menu)).data;
+                    menu = (await metaGroupware.api.common.menu.modifyMenu(menu.id, menu)).data;
                 } else {
-                    menu = (await metaojt.api.common.menu.createMenu(menu)).data;
+                    menu = (await metaGroupware.api.common.menu.createMenu(menu)).data;
                 }
-                await metaojt.alert("저장 되었습니다.");
+                await metaGroupware.alert("저장 되었습니다.");
                 await this.loadTreeMenuList();
                 this.treeview.menuList.active = [menu];
             }
@@ -74,9 +74,9 @@ SettingMenuMainPage = Vue.component("setting-menu-main-page", async function (re
             var menu;
             menu = this.data.menu;
             this.btn.removeMenu.loading = true;
-            if (await metaojt.confirm("삭제 하시겠습니까?")) {
-                await metaojt.api.common.menu.removeMenu(menu.id);
-                await metaojt.alert("삭제 되었습니다.");
+            if (await metaGroupware.confirm("삭제 하시겠습니까?")) {
+                await metaGroupware.api.common.menu.removeMenu(menu.id);
+                await metaGroupware.alert("삭제 되었습니다.");
                 await this.loadTreeMenuList();
                 this.treeview.menuList.active = [];
             }

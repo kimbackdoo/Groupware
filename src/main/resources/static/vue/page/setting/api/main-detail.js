@@ -33,7 +33,7 @@ SettingApiDetailMainPage = Vue.component("setting-api-detail-main-page", async f
                 return new Promise(function (resolve, reject) {
                     Promise.resolve()
                         .then(function () {
-                            return  metaojt.api.common.api.getApi(queryId);
+                            return  metaGroupware.api.common.api.getApi(queryId);
                         })
                         .then(function (response) {
                             self.detailData = response.data;
@@ -46,28 +46,28 @@ SettingApiDetailMainPage = Vue.component("setting-api-detail-main-page", async f
                 var self = this;
                 if(self.detailData.url == null || self.detailData.url == "")
                 {
-                    await metaojt.alert("API URL을 반드시 입력하세요.");
+                    await metaGroupware.alert("API URL을 반드시 입력하세요.");
                     return;
                 }
                 if(self.detailData.method == null || self.detailData.method == "")
                 {
-                    await metaojt.alert("API 종류을 반드시 입력하세요.");
+                    await metaGroupware.alert("API 종류을 반드시 입력하세요.");
                     return;
                 }
                 if(self.detailData.name == null || self.detailData.name == "")
                 {
-                    await metaojt.alert("API 명을 반드시 입력하세요.");
+                    await metaGroupware.alert("API 명을 반드시 입력하세요.");
                     return;
                 }
 
                 if(self.detailData.description == null || self.detailData.description == "")
                 {
-                    await metaojt.alert("설명을 반드시 입력하세요.");
+                    await metaGroupware.alert("설명을 반드시 입력하세요.");
                     return;
                 }
 
 
-                if (await metaojt.confirm("저장 하시겠습니까?")) {
+                if (await metaGroupware.confirm("저장 하시겠습니까?")) {
 
                     var params = {
                             "url" : self.detailData.url,
@@ -79,11 +79,11 @@ SettingApiDetailMainPage = Vue.component("setting-api-detail-main-page", async f
                     new Promise(function (resolve, reject) {
                         Promise.resolve()
                             .then(function () {
-                                return metaojt.api.common.api.createApi(params);
+                                return metaGroupware.api.common.api.createApi(params);
                             })
                             .then(function () { resolve(); });
                     });
-                    await metaojt.alert('저장에 성공했습니다.');
+                    await metaGroupware.alert('저장에 성공했습니다.');
                     this.$router.push({
                         "path": "/settings/apis"
                     });
@@ -93,28 +93,28 @@ SettingApiDetailMainPage = Vue.component("setting-api-detail-main-page", async f
                 var self = this;
                 if(self.detailData.url == null || self.detailData.url == "")
                 {
-                	metaojt.alert("API URL을 반드시 입력하세요.");
+                	metaGroupware.alert("API URL을 반드시 입력하세요.");
                     return;
                 }
                 if(self.detailData.method == null || self.detailData.method == "")
                 {
-                	metaojt.alert("API 종류을 반드시 입력하세요.");
+                	metaGroupware.alert("API 종류을 반드시 입력하세요.");
                     return;
                 }
                 if(self.detailData.name == null || self.detailData.name == "")
                 {
-                	metaojt.alert("API 명을 반드시 입력하세요.");
+                	metaGroupware.alert("API 명을 반드시 입력하세요.");
                     return;
                 }
 
                 if(self.detailData.description == null || self.detailData.description == "")
                 {
-                	metaojt.alert("설명을 반드시 입력하세요.");
+                	metaGroupware.alert("설명을 반드시 입력하세요.");
                     return;
                 }
 
 
-                if (await metaojt.confirm("수정 하시겠습니까?")) {
+                if (await metaGroupware.confirm("수정 하시겠습니까?")) {
 
                     var params = {
                             "id" : self.detailData.id,
@@ -127,11 +127,11 @@ SettingApiDetailMainPage = Vue.component("setting-api-detail-main-page", async f
                     new Promise(function (resolve, reject) {
                         Promise.resolve()
                             .then(function () {
-                                return metaojt.api.common.api.modifyApi(params.id , params);
+                                return metaGroupware.api.common.api.modifyApi(params.id , params);
                             })
                             .then(function () { resolve(); });
                     });
-                    await metaojt.alert('수정에 성공했습니다.');
+                    await metaGroupware.alert('수정에 성공했습니다.');
                     this.$router.push({
                         "path": "/settings/apis",
                     });

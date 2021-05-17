@@ -73,7 +73,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
             return true;
         },
         "existUsername": async function (username) {
-            return (await metaojt.auth.idExists({"username": username})).data > 0 ? true : false;
+            return (await metaGroupware.auth.idExists({"username": username})).data > 0 ? true : false;
         },
         "saveAccount": async function () {
 	
@@ -85,12 +85,12 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
             this.btn.saveAccount.loading = true;
             validate = this.$refs.form.validate();
             if (!validate) {
-                await metaojt.alert("유효한 값을 작성해주세요.");
+                await metaGroupware.alert("유효한 값을 작성해주세요.");
             } else if (await this.existUsername(user.username)) {
-                await metaojt.alert("동일한 아이디가 존재합니다.");
-            } else if (await metaojt.confirm("회원가입 하시겠습니까?")) {
-                await metaojt.auth.signUp({"userDto": user, "personDto": person, "userTypeCode": parseInt(this.picked)});
-                await metaojt.alert("회원가입 되었습니다.");
+                await metaGroupware.alert("동일한 아이디가 존재합니다.");
+            } else if (await metaGroupware.confirm("회원가입 하시겠습니까?")) {
+                await metaGroupware.auth.signUp({"userDto": user, "personDto": person, "userTypeCode": parseInt(this.picked)});
+                await metaGroupware.alert("회원가입 되었습니다.");
                 this.$router.push({"path": "/sign-in"});
             }
             this.btn.saveAccount.loading = false;

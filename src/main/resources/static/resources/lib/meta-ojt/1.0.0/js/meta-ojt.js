@@ -1,5 +1,5 @@
-var metaojt;
-metaojt = {
+var metaGroupware;
+metaGroupware = {
     "version": "1.0.0",
     "init": function () {
         axios.defaults.paramsSerializer = function (params) {
@@ -35,7 +35,7 @@ metaojt = {
             var authorization,
                 token;
             token = Basil.localStorage.get("token");
-            if (token && await metaojt.auth.authenticated(token)) {
+            if (token && await metaGroupware.auth.authenticated(token)) {
                 authorization = "Bearer " + token;
             } else {
                 authorization = (await axios({
@@ -191,7 +191,7 @@ metaojt = {
                 "modifyRoleUser": function (roleId, userId, data) { return axios({"url": "/api/common/role-users/" + roleId + "," + userId, "method": "put", "data": data}); },
                 "removeRoleUserList": function (data) { return axios({"url": "/api/common/role-users", "method": "delete", "data": data}); },
                 "removeRoleUser": function (roleId, userId) { return axios({"url": "/api/common/role-users/"+ roleId + "," + userId, "method": "delete"}); },
-				"updateRoleUser": function(data) {return axios({"url": "/api/common/role-users"+"/updateRoleUser", "method": "put"});  }            
+                "updateRoleUser": function(data) {return axios({"url": "/api/common/role-users"+"/updateRoleUser", "method": "put"});  }
 },
             "user": {
                 "getUserList": function (params) { return axios({"url": "/api/common/users", "method": "get", "params": params}); },
@@ -265,4 +265,4 @@ metaojt = {
         }
     }
 };
-metaojt.init();
+metaGroupware.init();

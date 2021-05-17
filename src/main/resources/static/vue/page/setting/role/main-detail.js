@@ -59,7 +59,7 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
             "loadTreeMenuList": async function (queryId) {
                 var self = this;
                 var treeMenuList;
-                treeMenuList = (await metaojt.api.util.menu.getTreeMenuList({
+                treeMenuList = (await metaGroupware.api.util.menu.getTreeMenuList({
                     "page": 1,
                     "rowSize": 100000000,
                     "sort": ["rankingPath,asc"]
@@ -79,7 +79,7 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
                                         "rowSize": 10000000,
                                 }
 
-                                return metaojt.api.common.roleMenu.getRoleMenuList(param);
+                                return metaGroupware.api.common.roleMenu.getRoleMenuList(param);
                             })
                             .then(function (response) {
 
@@ -130,7 +130,7 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
                 return new Promise(function (resolve, reject) {
                     Promise.resolve()
                         .then(function () {
-                            return  metaojt.api.common.role.getRole(queryId);
+                            return  metaGroupware.api.common.role.getRole(queryId);
                         })
                         .then(function (response) {
                             self.detailData = response.data;
@@ -148,7 +148,7 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
                                     "page": 1,
                                     "rowSize": 10000000,
                             };
-                            return metaojt.api.common.api.getApiList(param);
+                            return metaGroupware.api.common.api.getApiList(param);
                         })
                         .then(function (response) {
                             self.api.dataTable.items = response.data.items;
@@ -160,7 +160,7 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
                                         "rowSize": 10000000,
                                 };
 
-                                return metaojt.api.common.roleApi.getRoleApiList(param);
+                                return metaGroupware.api.common.roleApi.getRoleApiList(param);
                             } else {
                                 return null;
                             }
@@ -216,23 +216,23 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
                 var self = this;
                 if(self.detailData.name == null || self.detailData.name == "")
                 {
-                    await metaojt.alert("권한명을 반드시 입력하세요.");
+                    await metaGroupware.alert("권한명을 반드시 입력하세요.");
                     return;
                 }
 
                 if(self.detailData.description == null || self.detailData.description == "")
                 {
-                    await metaojt.alert("설명을 반드시 입력하세요.");
+                    await metaGroupware.alert("설명을 반드시 입력하세요.");
                     return;
                 }
 
                 if(self.detailData.value == null || self.detailData.value == "")
                 {
-                    await metaojt.alert("값을 반드시 입력하세요.");
+                    await metaGroupware.alert("값을 반드시 입력하세요.");
                     return;
                 }
 
-                if (await metaojt.confirm("저장 하시겠습니까?")) {
+                if (await metaGroupware.confirm("저장 하시겠습니까?")) {
                     var forPushParentItem = _.cloneDeep(self.data.treeMenuList);
 
                     var roleMenuListId = [];
@@ -301,11 +301,11 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
                     new Promise(function (resolve, reject) {
                         Promise.resolve()
                             .then(function () {
-                                return metaojt.api.app.RoleAndRoleMenuAndRoleApi.createRoleAndRoleMenuAndRoleApi(params);
+                                return metaGroupware.api.app.RoleAndRoleMenuAndRoleApi.createRoleAndRoleMenuAndRoleApi(params);
                             })
                             .then(function () { resolve(); });
                     });
-                    await metaojt.alert('저장에 성공했습니다.');
+                    await metaGroupware.alert('저장에 성공했습니다.');
                     this.$router.push({
                         "path": "/settings/roles",
                     });
@@ -316,23 +316,23 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
 
                 if(self.detailData.name == null || self.detailData.name == "")
                 {
-                    metaojt.alert("권한명을 반드시 입력하세요.");
+                    metaGroupware.alert("권한명을 반드시 입력하세요.");
                     return;
                 }
 
                 if(self.detailData.description == null || self.detailData.description == "")
                 {
-                    metaojt.alert("설명을 반드시 입력하세요.");
+                    metaGroupware.alert("설명을 반드시 입력하세요.");
                     return;
                 }
 
                 if(self.detailData.value == null || self.detailData.value == "")
                 {
-                    metaojt.alert("값을 반드시 입력하세요.");
+                    metaGroupware.alert("값을 반드시 입력하세요.");
                     return;
                 }
 
-                if (await metaojt.confirm("수정 하시겠습니까?")) {
+                if (await metaGroupware.confirm("수정 하시겠습니까?")) {
                     var forPushParentItem = _.cloneDeep(self.data.treeMenuList);
 
                     var roleMenuListId = [];
@@ -400,11 +400,11 @@ SettingRoleDetailMainPage = Vue.component("setting-role-detail-main-page", async
                     new Promise(function (resolve, reject) {
                         Promise.resolve()
                             .then(function () {
-                                 return metaojt.api.app.RoleAndRoleMenuAndRoleApi.modifyRoleAndRoleMenuAndRoleApi(params);
+                                 return metaGroupware.api.app.RoleAndRoleMenuAndRoleApi.modifyRoleAndRoleMenuAndRoleApi(params);
                             })
                             .then(function () { resolve(); });
                     });
-                    await metaojt.alert('수정에 성공했습니다.');
+                    await metaGroupware.alert('수정에 성공했습니다.');
                     this.$router.push({
                         "path": "/settings/roles",
                     });
