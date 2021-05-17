@@ -60,7 +60,7 @@ public class VacationDataDownloadService {
     @Autowired
     private RoleUserMapper roleUserMapper;
 
-    @Value (value = "${ito.file.load.url.vacation.form}")
+    @Value (value = "${groupware.file.load.url.vacation.form}")
     private String filePath;
 
 
