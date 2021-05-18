@@ -14,6 +14,7 @@
                                         label="부서(필수)"
                                         hide-details="auto"
                                         :rules="[rules.required]"
+                                        validate-on-blur
                                         :items="select.department.items"
                                         v-model="data.department"
                                     ></v-select>
@@ -25,6 +26,7 @@
                                         label="팀명(필수)"
                                         hide-details="auto"
                                         :rules="[rules.required]"
+                                        validate-on-blur
                                         :items="select.teamName.items"
                                         v-model="data.teamName"
                                     ></v-select>
@@ -36,6 +38,7 @@
                                         label="직급(필수)"
                                         hide-details="auto"
                                         :rules="[rules.required]"
+                                        validate-on-blur
                                         :items="select.position.items"
                                         v-model="data.position"
                                     ></v-select>
@@ -91,14 +94,6 @@
                                         v-model="data.user.password"
                                     ></v-text-field>
                                 </v-col>
-                            </v-row>
-                            <v-row>
-                            	<input type="radio" id="user" :value="userTypeCode.user" v-model="picked">
-								<label for="user">개인회원</label>
-								<input type="radio" id="company_user" :value="userTypeCode.company_user" v-model="picked">
-								<label for="company_user">기업회원</label>
-								<input type="radio" id="manager" :value="userTypeCode.manager" v-model="picked">
-								<label for="manager">관리자</label>
                             </v-row>
                             <v-row dense>
                                 <v-col cols="12" class="text-right">

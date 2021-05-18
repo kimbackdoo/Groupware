@@ -13,12 +13,6 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
                 "teamName": null,
                 "position": null,
             },
-			"userTypeCode" : {
-				"user" : "2",
-				"company_user" : "3",
-				"manager" : "4"
-			},
-			"picked" : null,
             "text": {
                 "icon": "mdi-eye-off-outline",
                 "type": "password"
@@ -89,17 +83,16 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
             }
         },
         "data.teamName": {
-            "handler": function(value) {
-                console.log(value);
+            "handler": async function(value) {
                 this.select.position.items = [];
-                console.log(this.select.position.items);
+                this.data.position = null;
                 if (value === "temp") {
                     this.select.position.items.push({"text": "연구원", "value": "engineer"});
-                } else if (value === "operation" || value === "plan") {
+                } else if (value === "operation" || value === "plan"){
                     this.select.position.items.push({"text": "팀장", "value": "teamLeader"});
                 }
             }
-        }
+        },
     },
     "methods": {
         "stck": function (str, limit) {
@@ -117,9 +110,6 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
             return (await metaGroupware.auth.idExists({"username": username})).data > 0 ? true : false;
         },
         "saveAccount": async function () {
-	
-			console.log(this.picked);
-	
             let user, person, validate;
             user = this.data.user;
             person = this.data.person;
@@ -130,7 +120,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
             } else if (await this.existUsername(user.username)) {
                 await metaGroupware.alert("동일한 아이디가 존재합니다.");
             } else if (await metaGroupware.confirm("회원가입 하시겠습니까?")) {
-                await metaGroupware.auth.signUp({"userDto": user, "personDto": person, "userTypeCode": parseInt(this.picked)});
+                await metaGroupware.auth.signUp({"userDto": user, "personDto": person});
                 await metaGroupware.alert("회원가입 되었습니다.");
                 this.$router.push({"path": "/sign-in"});
             }
