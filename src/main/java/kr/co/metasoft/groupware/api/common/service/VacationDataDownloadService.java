@@ -89,6 +89,7 @@ public class VacationDataDownloadService {
             //휴가신청자 직급
             String roleValue = userEntity.getPosition();
 
+
             //- 수정 -
             //해당 approval에 각각
             switch (roleValue) {
@@ -109,9 +110,16 @@ public class VacationDataDownloadService {
                 addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
                 break;
+            case "jeju":
+                roleValue = "test";
+                addExcelImage(workbook, sheet, mySeal, 4, 7, 0.15);
+                addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
+                addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
+                break;
             default:
                 break;
             }
+
 
             XSSFRow row = null;
             XSSFCell cell = null;

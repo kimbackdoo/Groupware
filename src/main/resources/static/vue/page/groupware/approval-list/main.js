@@ -14,7 +14,6 @@ GroupwareApprovalListPage = Vue.component('groupware-approval-list-page', async 
                         {"text": "신청자", "value": "name", "align": "center", "width": "120", cellClass: "text-truncate"},
                         {"text": "구분", "value": "type", "align": "center", "width": "120", cellClass: "text-truncate"},
                         {"text": "휴가기간", "value": "term", "align": "center", "width": "120", cellClass: "text-truncate"},
-                        {"text": "팀장 결재", "value": "teamLeader", "align": "center", "width": "120", cellClass: "text-truncate"},
                         {"text": "이사 결재", "value": "director", "align": "center", "width": "120", cellClass: "text-truncate"},
                         {"text": "대표 결재", "value": "president", "align": "center", "width": "120", cellClass: "text-truncate"},
                         {"text": "최종승인날짜", "value": "approvalDate", "align": "center", "width": "120", cellClass: "text-truncate"},
@@ -61,10 +60,6 @@ GroupwareApprovalListPage = Vue.component('groupware-approval-list-page', async 
                         case "S": approvalList.items[i].type = "병가"; break;
                         case "E": approvalList.items[i].type = "기타"; break;
                     }
-                    switch(approvalList.items[i].teamLeader) {
-                        case "T": approvalList.items[i].teamLeader = "O"; break;
-                        case "F": approvalList.items[i].teamLeader = "X"; break;
-                    }
                     switch(approvalList.items[i].director) {
                         case "T": approvalList.items[i].director = "O"; break;
                         case "F": approvalList.items[i].director = "X"; break;
@@ -81,12 +76,13 @@ GroupwareApprovalListPage = Vue.component('groupware-approval-list-page', async 
             },
             "vacationDownload": async function(data) {
                 let step = data.item.step, vacationId = data.item.vacationId;
-                if(step !== 3) {
+                if(step !== 2) {
                     await metaGroupware.alert("모든 승인이 되지 않았습니다.");
                 } else {
+                    console.log(vacationId);
                     await metaGroupware.api.common.vacationDownload.downloadVacationXlsx({
                         "id": vacationId,
-                        "takingUser": ""
+                        "takingUser": "테스트"
                     });
                     await metaGroupware.alert("다운로드를 완료하였습니다.");
                 }
