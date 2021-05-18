@@ -14,9 +14,8 @@
                                         label="부서(필수)"
                                         hide-details="auto"
                                         :rules="[rules.required]"
-                                        validate-on-blur
                                         :items="select.department.items"
-                                        v-model="data.department"
+                                        v-model="data.user.department"
                                     ></v-select>
                                 </v-col>
                                 <v-col cols="4">
@@ -27,8 +26,9 @@
                                         hide-details="auto"
                                         :rules="[rules.required]"
                                         validate-on-blur
+                                        :disabled="data.user.department === null"
                                         :items="select.teamName.items"
-                                        v-model="data.teamName"
+                                        v-model="data.user.teamName"
                                     ></v-select>
                                 </v-col>
                                 <v-col cols="4">
@@ -39,8 +39,9 @@
                                         hide-details="auto"
                                         :rules="[rules.required]"
                                         validate-on-blur
+                                        :disabled="data.user.teamName === null"
                                         :items="select.position.items"
-                                        v-model="data.position"
+                                        v-model="data.user.position"
                                     ></v-select>
                                 </v-col>
                                 <v-col cols="12">
@@ -51,7 +52,7 @@
                                         label="이름(필수)"
                                         :rules="[rules.required]"
                                         hide-details="auto"
-                                        v-model="data.person.name"
+                                        v-model="data.user.name"
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
