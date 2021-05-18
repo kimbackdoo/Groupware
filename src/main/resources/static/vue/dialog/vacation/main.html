@@ -46,23 +46,23 @@
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="7" md="5">
-                        <date-picker-component
+                        <picker-date-picker-component
                             dense
                             label="시작일"
                             append-icon="mdi-calendar"
                             hide-details="auto"
                             v-model="vacation.sterm"
-                        ></date-picker-component>
+                        ></picker-date-picker-component>
                     </v-col>
                     <v-col cols="2" md="auto" class="d-flex align-center">~</v-col>
                     <v-col cols="12" sm="7" md="5">
-                        <date-picker-component
+                        <picker-date-picker-component
                             dense
                             label="종료일"
                             append-icon="mdi-calendar"
                             hide-details="auto"
                             v-model="vacation.eterm"
-                        ></date-picker-component>
+                        ></picker-date-picker-component>
                     </v-col>
                     <v-col cols="12" sm="10" md="8">
                         <v-textarea
