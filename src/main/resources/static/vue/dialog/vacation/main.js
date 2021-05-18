@@ -43,7 +43,7 @@ VacationDialogComponent = Vue.component('vacation-dialog-component', async funct
                     let self = this, userId = store.state.app.user.id;
 
                     if(n) {
-                        user = (await ito.api.common.user.getUser(userId)).data;
+                        user = (await metaGroupware.api.common.user.getUser(userId)).data;
 
                         self.vacation = _.cloneDeep(self.dialog.data);
                         self.vacation.name = user.username;

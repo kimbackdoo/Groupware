@@ -13,7 +13,6 @@
             `vacation`.`sterm`,
             `vacation`.`eterm`,
             `vacation`.`detail`,
-            `vacation_approval`.`team_leader` AS `vacation_approval_team_leader`,
             `vacation_approval`.`director` AS `vacation_approval_director`,
             `vacation_approval`.`president` AS `vacation_approval_president`,
             `vacation_approval`.`step` AS `vacation_approval_step`
@@ -49,7 +48,6 @@
         <result property="sterm" column="sterm" />
         <result property="eterm" column="eterm" />
         <result property="detail" column="detail" />
-        <result property="teamLeader" column="vacation_approval_team_leader" />
         <result property="director" column="vacation_approval_director" />
         <result property="president" column="vacation_approval_president" />
         <result property="step" column="vacation_approval_step" />
