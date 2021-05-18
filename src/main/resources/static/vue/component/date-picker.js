@@ -69,6 +69,10 @@ var PickerDatePickerComponent = Vue.component('picker-date-picker-component', fu
                     "type": Array,
                     "default": []
                 },
+                "validateOnBlur": {
+                    "type": Boolean,
+                    "default": true
+                },
                 "type": {
                     "type": String,
                     "default": "date"
@@ -92,6 +96,12 @@ var PickerDatePickerComponent = Vue.component('picker-date-picker-component', fu
                 };
             },
             "watch": {
+                "validateOnBlur": {
+                    "handler": function(value) {
+                        console.log(value);
+                    },
+                    "deep": true
+                },
                 "value": {
                     "handler": function (newValue, oldValue) {
                         this.$emit("input", newValue);
