@@ -136,7 +136,6 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
             },
         },
         "mounted": async function () {
-            console.log(this.data.user);
         }
     });
 });
