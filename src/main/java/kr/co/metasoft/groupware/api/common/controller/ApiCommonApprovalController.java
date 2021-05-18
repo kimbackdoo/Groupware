@@ -54,7 +54,6 @@ public class ApiCommonApprovalController {
                 .id(approvalDto.getId())
                 .vacationId(approvalDto.getVacationId())
                 .step(approvalDto.getStep())
-                .teamLeader(approvalDto.getTeamLeader())
                 .director(approvalDto.getDirector())
                 .president(approvalDto.getPresident())
                 .approvalDate(approvalDto.getApprovalDate())
@@ -67,27 +66,21 @@ public class ApiCommonApprovalController {
             @PathVariable (name = "id") Long id,
             @RequestBody ApprovalDto approvalDto) {
         ApprovalEntity approval = getApproval(id);
-        String teamStatus = approval.getTeamLeader();
         String directorStatus = approval.getDirector();
         String presidentStatus = approval.getPresident();
-        if(Objects.equals(approvalDto.getTeamLeader(), "T")) {
-            teamStatus = approvalDto.getTeamLeader();
-            approvalDto.setStep(1L);
-        }
         if(Objects.equals(approvalDto.getDirector(), "T")) {
             directorStatus = approvalDto.getDirector();
-            approvalDto.setStep(2L);
+            approvalDto.setStep(1L);
         }
         if(Objects.equals(approvalDto.getPresident(), "T")) {
             presidentStatus = approval.getPresident();
-            approvalDto.setStep(3L);
+            approvalDto.setStep(2L);
         }
         Long approvalId = approval.getId();
         ApprovalEntity approvalEntity = ApprovalEntity.builder()
                 .id(approvalId)
                 .vacationId(id)
                 .step(approvalDto.getStep())
-                .teamLeader(teamStatus)
                 .director(directorStatus)
                 .president(presidentStatus)
                 .approvalDate(approvalDto.getApprovalDate())

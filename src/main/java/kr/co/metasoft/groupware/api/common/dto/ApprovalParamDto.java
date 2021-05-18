@@ -23,8 +23,6 @@ public class ApprovalParamDto {
 
     private Long step;
 
-    private String teamLeader;
-
     private String director;
 
     private String president;

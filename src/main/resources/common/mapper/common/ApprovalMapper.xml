@@ -7,7 +7,6 @@
             `approval`.`id`,
             `approval`.`vacation_id`,
             `approval`.`step`,
-            `approval`.`team_leader`,
             `approval`.`director`,
             `approval`.`president`,
             `approval`.`approval_date`
@@ -41,7 +40,6 @@
         <result property="id" column="id" />
         <result property="vacationId" column="vacation_id" />
         <result property="step" column="step" />
-        <result property="teamLeader" column="team_leader" />
         <result property="director" column="director" />
         <result property="president" column="president" />
         <result property="approvalDate" column="approval_date" />

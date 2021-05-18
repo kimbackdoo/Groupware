@@ -49,16 +49,11 @@ public class VacationDataDownloadService {
     private VacationService vacationService;
 
     @Autowired
-    private ApprovalService approvalService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
     private UserSealService userSealService;
 
-    @Autowired
-    private RoleUserMapper roleUserMapper;
 
     @Value (value = "${groupware.file.load.url.vacation.form}")
     private String filePath;
@@ -70,7 +65,6 @@ public class VacationDataDownloadService {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         VacationEntity vacationEntity = vacationService.getVacation(vacationParamDto.getId());
-        ApprovalEntity approvalEntity = approvalService.getApprovalEntity(vacationEntity.getId());
         UserEntity userEntity = userService.getUser(vacationEntity.getUserId());
 
 
@@ -83,42 +77,36 @@ public class VacationDataDownloadService {
 
 
             //결제 도장
-            //팀장(userId = 16), 이사(userId = 17), 대표이사(userId = 1) => 결재 도장 url 불러오기
-            String teamLeaderSeal = userSealService.selectUserseal(16L).getImageUrl();
-            String directorSeal = userSealService.selectUserseal(17L).getImageUrl();
+            //자기자신 싸인(userId = ??), 이사(userId = 17), 대표이사(userId = 1) => 결재 도장 url 불러오기
+            String mySeal = userSealService.selectUserseal(userEntity.getId()).getImageUrl();
+            String directorSeal = userSealService.selectUserseal(2L).getImageUrl();
             String presidentSeal = userSealService.selectUserseal(1L).getImageUrl();
-
-            //먼저 role 값이 사원, 팀장, 이사, 대표이사 인지 구분
-            RoleUserParamDto r = RoleUserParamDto.builder().userId(userEntity.getId()).build();
-            PageRequest p = new PageRequest();
-            List<RoleUserEntity> list = roleUserMapper.selectRoleUserList(r,p);
 
             //휴가신청자 싸인
             String signPath = userSealService.selectUserseal(userEntity.getId()).getSignUrl();
             addExcelImage(workbook, sheet, signPath, 27, 6, 0.3);
 
             //휴가신청자 직급
-            String roleValue = list.get(0).getRole().getValue();
+            String roleValue = userEntity.getPosition();
 
+            //- 수정 -
             //해당 approval에 각각
             switch (roleValue) {
-            case "ROLE_EMPLOYEE":
-                roleValue = "사원";
-                addExcelImage(workbook, sheet, teamLeaderSeal, 4, 7, 0.15);
+            case "enginner":
+                roleValue = "연구원";
+                addExcelImage(workbook, sheet, mySeal, 4, 7, 0.15);
                 addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
                 break;
-            case "ROLE_TEAMLEADER":
+            case "":
                 roleValue = "팀장";
+                addExcelImage(workbook, sheet, mySeal, 4, 7, 0.15);
                 addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
                 break;
-            case "ROLE_DIRECTOR":
+            case "ㅇㅇ":
                 roleValue = "이사";
-                addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
-                break;
-            case "ROLE_ADMIN":
-                roleValue = "대표 이사";
+                addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
                 break;
             default:
@@ -231,12 +219,6 @@ public class VacationDataDownloadService {
                     userEntity.getUsername()+
                     "      (인)");
 
-
-//            String path = "C:\\";
-//            String fileName = "휴가신청서_"+userEntity.getUsername()+"("+vacationEntity.getId()+")"+".xlsx";
-//            File xlsxFile = new File(path + fileName);
-//            FileOutputStream fileOut = new FileOutputStream(xlsxFile);
-//            workbook.write(fileOut);
 
             workbook.write(baos);
 

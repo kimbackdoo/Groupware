@@ -32,6 +32,9 @@
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="email" column="email"/>
+        <result property="department" column="department"/>
+        <result property="teamName" column="team_name"/>
+        <result property="position" column="position"/>
         <result property="lastModifiedPasswordDate" column="last_modified_password_date"/>
         <result property="status" column="status"/>
         <result property="createdDate" column="created_date"/>

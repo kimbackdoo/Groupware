@@ -54,9 +54,6 @@ public class ApprovalEntity {
     @Column (name = "`step`", columnDefinition = "bigint(20)", nullable = true)
     private Long step;
 
-    @Column (name = "`team_leader`", columnDefinition = "enum('T','F')", nullable = true)
-    private String teamLeader;
-
     @Column (name = "`director`", columnDefinition = "enum('T','F')", nullable = true)
     private String director;
 

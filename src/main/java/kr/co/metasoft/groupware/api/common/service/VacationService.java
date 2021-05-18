@@ -70,7 +70,6 @@ public class VacationService {
         approvalRepository.save(ApprovalEntity.builder()
                 .vacationId(id)
                 .step(0L)
-                .teamLeader("F")
                 .director("F")
                 .president("F")
                 .build());
