@@ -98,13 +98,13 @@ public class VacationDataDownloadService {
                 addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
                 break;
-            case "":
+            case "teamLeader":
                 roleValue = "팀장";
                 addExcelImage(workbook, sheet, mySeal, 4, 7, 0.15);
                 addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
                 break;
-            case "ㅇㅇ":
+            case "director":
                 roleValue = "이사";
                 addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
