@@ -7,6 +7,62 @@
                     <v-card-text>
                         <v-form ref="form">
                             <v-row dense>
+                                <v-col cols="4">
+                                    <v-select
+                                        dense
+                                        outlined
+                                        label="부서(필수)"
+                                        hide-details="auto"
+                                        :rules="[rules.required]"
+                                        :items="select.department.items"
+                                        v-model="data.department"
+                                    ></v-select>
+                                </v-col>
+                                <v-col cols="4">
+                                    <v-select
+                                        dense
+                                        outlined
+                                        label="팀명(필수)"
+                                        hide-details="auto"
+                                        :rules="[rules.required]"
+                                        :items="select.teamName.items"
+                                        v-model="data.teamName"
+                                    ></v-select>
+                                </v-col>
+                                <v-col cols="4">
+                                    <v-select
+                                        dense
+                                        outlined
+                                        label="직급(필수)"
+                                        hide-details="auto"
+                                        :rules="[rules.required]"
+                                        :items="select.position.items"
+                                        v-model="data.position"
+                                    ></v-select>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        dense
+                                        outlined
+                                        clearable
+                                        label="이름(필수)"
+                                        :rules="[rules.required]"
+                                        hide-details="auto"
+                                        v-model="data.person.name"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        autocomplete="off"
+                                        dense
+                                        outlined
+                                        clearable
+                                        label="이메일(필수)"
+                                        :rules="[rules.required, rules.email]"
+                                        hide-details="auto"
+                                        v-model="data.user.email"
+                                    ></v-text-field>
+                                </v-col>
                                 <v-col cols="12">
                                     <v-text-field
                                         autocomplete="off"
@@ -33,29 +89,6 @@
                                         :rules="[rules.required, rules.password]"
                                         hide-details="auto"
                                         v-model="data.user.password"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        autocomplete="off"
-                                        dense
-                                        outlined
-                                        clearable
-                                        label="이메일(필수)"
-                                        :rules="[rules.required, rules.email]"
-                                        hide-details="auto"
-                                        v-model="data.user.email"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        dense
-                                        outlined
-                                        clearable
-                                        label="이름(필수)"
-                                        :rules="[rules.required]"
-                                        hide-details="auto"
-                                        v-model="data.person.name"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>

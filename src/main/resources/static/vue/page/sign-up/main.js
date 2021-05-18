@@ -8,7 +8,10 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
                 "user": {},
                 "role": {
                     "id": null
-                }
+                },
+                "department": null,
+                "teamName": null,
+                "position": null,
             },
 			"userTypeCode" : {
 				"user" : "2",
@@ -56,9 +59,47 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
                         flag = true;
                     }
                     return flag || message;
+                },
+            },
+            "select": {
+                "department": {
+                    "items": [
+                        {"text": "개발부", "value": "develop"},
+                        {"text": "서비스부", "value": "service"}
+                    ]
+                },
+                "teamName": {
+                    "items": []
+                },
+                "position": {
+                    "items": []
                 }
             }
         };
+    },
+    "watch": {
+        "data.department": {
+            "handler": function(value) {
+                this.select.teamName.items = [];
+                this.select.position.items = [];
+                switch (value) {
+                    case "develop": this.select.teamName.items.push({"text": "Temp", "value": "temp"}); break;
+                    case "service": this.select.teamName.items.push({"text": "운영팀", "value": "operation"}, {"text": "기획팀", "value": "plan"}); break;
+                }
+            }
+        },
+        "data.teamName": {
+            "handler": function(value) {
+                console.log(value);
+                this.select.position.items = [];
+                console.log(this.select.position.items);
+                if (value === "temp") {
+                    this.select.position.items.push({"text": "연구원", "value": "engineer"});
+                } else if (value === "operation" || value === "plan") {
+                    this.select.position.items.push({"text": "팀장", "value": "teamLeader"});
+                }
+            }
+        }
     },
     "methods": {
         "stck": function (str, limit) {
