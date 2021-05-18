@@ -3,6 +3,8 @@ package kr.co.metasoft.groupware.api.common.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,6 +31,10 @@ public class UserDto {
     private String password;
 
     private String email;
+
+    @JsonFormat (pattern = "yyyy-MM-dd")
+    @DateTimeFormat (pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
 
     private String department;
 

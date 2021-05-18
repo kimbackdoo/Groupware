@@ -64,6 +64,11 @@ public class UserEntity {
     @Column (name = "`email`", columnDefinition = "varchar(500)", nullable = true)
     private String email;
 
+    @JsonFormat (pattern = "yyyy-MM-dd")
+    @DateTimeFormat (pattern = "yyyy-MM-dd")
+    @Column (name = "`birth_date`", columnDefinition = "date", nullable = true)
+    private LocalDate birthDate;
+
     @Column (name = "`department`", columnDefinition = "varchar(100)", nullable = false)
     private String department;
 

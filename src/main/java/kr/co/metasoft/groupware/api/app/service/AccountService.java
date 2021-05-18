@@ -38,8 +38,8 @@ public class AccountService {
     @Autowired
     RoleUserService roleUserService;
 
-    @Autowired
-    private UserPersonRepository userPersonRepository;
+//    @Autowired
+//    private UserPersonRepository userPersonRepository;
 
     @Autowired
     private RoleUserRepository roleUserRepository;
@@ -47,8 +47,8 @@ public class AccountService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PersonRepository personRepository;
+//    @Autowired
+//    private PersonRepository personRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -72,22 +72,22 @@ public class AccountService {
         if(accountDto.getUserDto().getStatus() != null)
             userEntity.setStatus(accountDto.getUserDto().getStatus());
 
-        PersonEntity personEntity = new PersonEntity(accountDto.getPersonDto().getId(),
-                accountDto.getPersonDto().getName(), accountDto.getPersonDto().getCreatedDate(),
-                accountDto.getPersonDto().getLastModifiedDate());
+//        PersonEntity personEntity = new PersonEntity(accountDto.getPersonDto().getId(),
+//                accountDto.getPersonDto().getName(), accountDto.getPersonDto().getCreatedDate(),
+//                accountDto.getPersonDto().getLastModifiedDate());
 
         userEntity.setPassword(passwordEncoder.encode((userEntity.getPassword())));
         Long userId = userRepository.save(userEntity).getId();
-        Long personId = personRepository.save(personEntity).getId();
+//        Long personId = personRepository.save(personEntity).getId();
         result.setUserId(userId);
-        result.setPersonId(personId);
-        UserPersonEntity userPersonEntity = new UserPersonEntity(userId, personId, null, null);
+//        result.setPersonId(personId);
+//        UserPersonEntity userPersonEntity = new UserPersonEntity(userId, personId, null, null);
         List<RoleUserEntity> roleUserEntityList = new ArrayList<RoleUserEntity>();
         for (int i = 0; i < accountDto.getRoleId().size(); i++) {
             roleUserEntityList.add(new RoleUserEntity(userId, accountDto.getRoleId().get(i), null, null));
         }
         roleUserRepository.saveAll(roleUserEntityList);
-        userPersonRepository.save(userPersonEntity);
+//        userPersonRepository.save(userPersonEntity);
         return result;
     }
 
@@ -112,18 +112,18 @@ public class AccountService {
             userEntity.setStatus(accountDto.getUserDto().getStatus());
 
 
-        PersonEntity personEntity = new PersonEntity(accountDto.getPersonDto().getId(),
-                accountDto.getPersonDto().getName(), accountDto.getPersonDto().getCreatedDate(),
-                accountDto.getPersonDto().getLastModifiedDate());
+//        PersonEntity personEntity = new PersonEntity(accountDto.getPersonDto().getId(),
+//                accountDto.getPersonDto().getName(), accountDto.getPersonDto().getCreatedDate(),
+//                accountDto.getPersonDto().getLastModifiedDate());
         Long userId = userRepository.save(userEntity).getId();
-        Long personId = personRepository.save(personEntity).getId();
-        UserPersonEntity userPersonEntity = new UserPersonEntity(userId, personId, null, null);
+//        Long personId = personRepository.save(personEntity).getId();
+//        UserPersonEntity userPersonEntity = new UserPersonEntity(userId, personId, null, null);
         List<RoleUserEntity> roleUserEntityList = new ArrayList<>();
         for (int i = 0; i < accountDto.getRoleId().size(); i++) {
             roleUserEntityList.add(new RoleUserEntity(userId, accountDto.getRoleId().get(i), null, null));
         }
         roleUserRepository.saveAll(roleUserEntityList);
-        userPersonRepository.save(userPersonEntity);
+//        userPersonRepository.save(userPersonEntity);
 
         RoleUserParamDto roleUserParamDto = new RoleUserParamDto();
         roleUserParamDto.setUserId(accountDto.getUserId());
@@ -167,20 +167,20 @@ public class AccountService {
         userEntity.setCreatedDate(LocalDateTime.now());
         userEntity.setLastModifiedDate(LocalDateTime.now());
 
-        PersonEntity personEntity = new PersonEntity();
+//        PersonEntity personEntity = new PersonEntity();
 
-        personEntity.setId(accountDto.getPersonDto().getId());
-        personEntity.setName(accountDto.getPersonDto().getName());
-        personEntity.setCreatedDate(LocalDateTime.now());
-        personEntity.setLastModifiedDate(LocalDateTime.now());
+//        personEntity.setId(accountDto.getPersonDto().getId());
+//        personEntity.setName(accountDto.getPersonDto().getName());
+//        personEntity.setCreatedDate(LocalDateTime.now());
+//        personEntity.setLastModifiedDate(LocalDateTime.now());
 
         userEntity.setPassword(passwordEncoder.encode((userEntity.getPassword())));
         Long userId = userRepository.save(userEntity).getId();
-        Long personId = personRepository.save(personEntity).getId();
+//        Long personId = personRepository.save(personEntity).getId();
 
         UserPersonEntity userPersonEntity = new UserPersonEntity();
         userPersonEntity.setUserId(userId);
-        userPersonEntity.setPersonId(personId);
+//        userPersonEntity.setPersonId(personId);
 
         RoleUserEntity roleUserEntity = new RoleUserEntity();
 
@@ -188,16 +188,16 @@ public class AccountService {
         roleUserEntity.setRoleId((long) 1);
 
         roleUserRepository.save(roleUserEntity);
-        userPersonRepository.save(userPersonEntity);
+//        userPersonRepository.save(userPersonEntity);
 
     }
 
     @Validated(value = { RemoveValidationGroup.class })
     @Transactional
     public void removeAccount(@Valid @NotNull(groups = { RemoveValidationGroup.class }) AccountDto accountDto) {
-        userPersonRepository.delete(UserPersonEntity.builder().userId(accountDto.getUserId()).build());
+//        userPersonRepository.delete(UserPersonEntity.builder().userId(accountDto.getUserId()).build());
         userRepository.delete(UserEntity.builder().id(accountDto.getUserId()).build());
-        personRepository.delete(PersonEntity.builder().id(accountDto.getPersonId()).build());
+//        personRepository.delete(PersonEntity.builder().id(accountDto.getPersonId()).build());
         roleUserRepository.delete(RoleUserEntity.builder().userId(accountDto.getUserId()).build());
     }
 

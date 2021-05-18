@@ -8,6 +8,7 @@
             `user`.`username`,
             `user`.`password`,
             `user`.`email`,
+            `user`.`birth_date`,
             `user`.`department`,
             `user`.`team_name`,
             `user`.`position`,
@@ -32,6 +33,7 @@
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="email" column="email"/>
+        <result property="birthDate" column="birth_date"/>
         <result property="department" column="department"/>
         <result property="teamName" column="team_name"/>
         <result property="position" column="position"/>
