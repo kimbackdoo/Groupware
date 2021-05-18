@@ -11,4 +11,10 @@ public class UserParamDto {
 
     private String username;
 
+    private String department;
+
+    private String teamName;
+
+    private String position;
+
 }

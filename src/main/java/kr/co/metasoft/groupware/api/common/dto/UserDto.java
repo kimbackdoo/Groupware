@@ -30,6 +30,12 @@ public class UserDto {
 
     private String email;
 
+    private String department;
+
+    private String teamName;
+
+    private String position;
+
     private String status;
 
     @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss")

@@ -51,6 +51,9 @@ public class ApiCommonUserController {
                     .username(userDto.getUsername())
                     .password(userDto.getPassword())
                     .email(userDto.getEmail())
+                    .department(userDto.getDepartment())
+                    .teamName(userDto.getTeamName())
+                    .position(userDto.getPosition())
                     .lastModifiedPasswordDate(userDto.getLastModifiedPasswordDate())
                     .status(userDto.getStatus())
                     .build();
@@ -66,6 +69,9 @@ public class ApiCommonUserController {
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
+                .department(userDto.getDepartment())
+                .teamName(userDto.getTeamName())
+                .position(userDto.getPosition())
                 .lastModifiedPasswordDate(userDto.getLastModifiedPasswordDate())
                 .status(userDto.getStatus())
                 .build();
@@ -83,6 +89,9 @@ public class ApiCommonUserController {
                     .username(userDto.getUsername())
                     .password(userDto.getPassword())
                     .email(userDto.getEmail())
+                    .department(userDto.getDepartment())
+                    .teamName(userDto.getTeamName())
+                    .position(userDto.getPosition())
                     .lastModifiedPasswordDate(userDto.getLastModifiedPasswordDate())
                     .status(userDto.getStatus())
                     .build();
@@ -100,6 +109,9 @@ public class ApiCommonUserController {
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
+                .department(userDto.getDepartment())
+                .teamName(userDto.getTeamName())
+                .position(userDto.getPosition())
                 .lastModifiedPasswordDate(userDto.getLastModifiedPasswordDate())
                 .status(userDto.getStatus())
                 .build();

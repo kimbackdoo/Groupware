@@ -64,6 +64,15 @@ public class UserEntity {
     @Column (name = "`email`", columnDefinition = "varchar(500)", nullable = true)
     private String email;
 
+    @Column (name = "`department`", columnDefinition = "varchar(100)", nullable = false)
+    private String department;
+
+    @Column (name = "`team_name`", columnDefinition = "varchar(100)", nullable = false)
+    private String teamName;
+
+    @Column (name = "`position`", columnDefinition = "varchar(100)", nullable = false)
+    private String position;
+
     @Column (name = "`status`", columnDefinition = "enum('T','F','D')", nullable = true)
     private String status;
 
