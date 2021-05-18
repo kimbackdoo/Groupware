@@ -83,7 +83,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) { r
             }
         },
         "data.teamName": {
-            "handler": async function(value) {
+            "handler": function(value) {
                 this.select.position.items = [];
                 this.data.position = null;
                 if (value === "temp") {
