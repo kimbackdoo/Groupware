@@ -121,11 +121,13 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                 this.fileUploadData.selectedFileName=dataUpload.selectedFileName;
                 this.fileUploadData.selectedFile2=dataUpload.selectedFile2;
                 this.fileUploadData.selectedFileName2=dataUpload.selectedFileName2;
+                console.log(this.fileUploadData.selectedFile);
+                console.log(this.fileUploadData.selectedFile2);
 
-                var returnType = await ito.api.app.upload.person(form);
+//                var returnType = await ito.api.app.upload.person(form);
                 store.commit("app/SET_LOADING", false);
 
-                if(returnType.data.returnVal != 'SUCCESS'){
+/*                if(returnType.data.returnVal != 'SUCCESS'){
                     await ito.alert(returnType.data.returnMsg);
                 }else{
                     await ito.alert(returnType.data.returnMsg);
@@ -133,7 +135,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     this.user.dataTable.search = true;
                     this.loadJobItems();
                 }
-
+*/
 
 
             },
@@ -164,7 +166,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     await metaGroupware.auth.signUp({"userDto": user});
 
                     //userId 가져온 다음 -> seal 테이블에 이미지 추가하기
-
+                    // api.app.uploads.sealFile () -> controller 추가하기
 
                     await metaGroupware.alert("회원가입 되었습니다.");
                     this.$router.push({"path": "/sign-in"});

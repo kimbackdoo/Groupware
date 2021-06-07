@@ -305,7 +305,11 @@ metaGroupware = {
             "RoleAndRoleMenuAndRoleApi": {
                 "createRoleAndRoleMenuAndRoleApi": function (data) { return axios({"url": "/api/app/role-menu-apis", "method": "post", "data": data}); },
                 "modifyRoleAndRoleMenuAndRoleApi": function (data) { return axios({"url": "/api/app/role-menu-apis", "method": "put", "data": data}); },
-            }
+            },
+            "upload" : {
+                "sealFile" : function (data) { return axios({"url": "/api/app/uploads/sealFiles","enctype": "multipart/form-data", "contentType" : false, "cache" : false, "processData" : false, "method": "post", "data": data});},
+            },
+
         },
         "util": {
             "menu": {
