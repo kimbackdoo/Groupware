@@ -1,0 +1,97 @@
+<v-dialog
+    v-model="dialog.visible"
+    persistent
+    max-width="600px"
+>
+    <v-card>
+        <v-card-title>
+            <span class="headline">싸인, 도장 업로드</span>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+            <v-container>
+                <v-row>
+                    <v-col cols="9">
+                        <v-text-field
+                            dense
+                            label="싸인"
+                            outlined
+                            hide-details="auto"
+                            readonly
+                            v-model="dataUpload.selectedFileName"
+                            height="5px"
+                        >
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="3" class="text-right">
+                        <v-btn
+                            elevation="2"
+                            color="secondary"
+                            class="text-none ml-auto"
+                            depressed
+                            @click="onButtonClick()"
+                        >파일찾기</v-btn>
+                     </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="9">
+                        <v-text-field
+                            dense
+                            label="도장"
+                            outlined
+                            hide-details="auto"
+                            readonly
+                            v-model="dataUpload.selectedFileName2"
+                            height="5px"
+                        >
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="3" class="text-right">
+                        <v-btn
+                            elevation="2"
+                            color="secondary"
+                            class="text-none ml-auto"
+                            depressed
+                            @click="onButtonClick2()"
+                        >파일찾기</v-btn>
+                     </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col cols="13" class="text-right" >
+                        <v-btn
+                            elevation="2"
+                            color="success"
+                            class="text-none ml-1"
+                            depressed
+                            @click="onFileUpload()"
+                            >업로드</v-btn>
+                        <v-btn
+                            elevation="2"
+                            depressed
+                            color="error"
+                            class="text-none ml-1"
+                            @click="clear()"
+                         >
+                        취소
+                        </v-btn>
+                        <input
+                            ref="uploader"
+                            class="d-none"
+                            id="hiddenFile"
+                            type="file"
+                            @change="onFileChanged"
+                        />
+                        <input
+                            ref="uploader2"
+                            class="d-none"
+                            id="hiddenFile2"
+                            type="file"
+                            @change="onFileChanged2"
+                        />
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-card-text>
+    </v-card>
+</v-dialog>

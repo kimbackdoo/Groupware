@@ -30,9 +30,11 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                         flag = false;
                         if(value == null || value.length < 8) {
                             message = '비밀번호 8자 이상';
-                        } else if (!/(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/g.test(value)) {
-                            message = '영문자 숫자 특수문자 조합';
-                        } else if (/(\w)\1\1/.test(value)){
+                        }
+//						 else if (!/(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/g.test(value)) {
+//                            message = '영문자 숫자 특수문자 조합';
+//                        }
+                         else if (/(\w)\1\1/.test(value)){
                             message = '동일한 3자리 문자';
                         } else if (!this.stck(value, 3)) {
                             message = '연속된 3자리 문자';
@@ -43,6 +45,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                         } else {
                             flag = true;
                         }
+
                         return flag || message;
                     },
                     "email": (value) => {
@@ -69,6 +72,15 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     "position": {
                         "items": []
                     }
+                },
+                "dialog": {
+                    "visible": false,
+                },
+                "fileUploadData": {
+                    "selectedFile": null,
+                    "selectedFileName": null,
+                    "selectedFile2": null,
+                    "selectedFileName2": null,
                 }
             };
         },
@@ -95,6 +107,36 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
             },
         },
         "methods": {
+            "openSignDialog": function () {
+                this.dialog.visible = true;
+            },
+
+
+            "fileUpload": async function (dataUpload) {
+                var form = new FormData();
+                store.commit("app/SET_LOADING", true);
+                form.append("file" , dataUpload.selectedFile);
+
+                this.fileUploadData.selectedFile=dataUpload.selectedFile;
+                this.fileUploadData.selectedFileName=dataUpload.selectedFileName;
+                this.fileUploadData.selectedFile2=dataUpload.selectedFile2;
+                this.fileUploadData.selectedFileName2=dataUpload.selectedFileName2;
+
+                var returnType = await ito.api.app.upload.person(form);
+                store.commit("app/SET_LOADING", false);
+
+                if(returnType.data.returnVal != 'SUCCESS'){
+                    await ito.alert(returnType.data.returnMsg);
+                }else{
+                    await ito.alert(returnType.data.returnMsg);
+                    this.dialog.visible = false;
+                    this.user.dataTable.search = true;
+                    this.loadJobItems();
+                }
+
+
+
+            },
             "stck": function (str, limit) {
                 var o, d, p, n = 0, l = limit == null ? 4 : limit;
                 for (var i = 0; i < str.length; i++) {
@@ -120,10 +162,17 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     await metaGroupware.alert("동일한 아이디가 존재합니다.");
                 } else if (await metaGroupware.confirm("회원가입 하시겠습니까?")) {
                     await metaGroupware.auth.signUp({"userDto": user});
+
+                    //userId 가져온 다음 -> seal 테이블에 이미지 추가하기
+
+
                     await metaGroupware.alert("회원가입 되었습니다.");
                     this.$router.push({"path": "/sign-in"});
                 }
                 this.btn.saveAccount.loading = false;
+            },
+            "inputSign": async function(){
+                //이미지 등록하기
             },
             "showPassword": function () {
                 if(this.text.icon == 'mdi-eye-off-outline'){

@@ -110,9 +110,36 @@
                                         v-model="data.user.password"
                                     ></v-text-field>
                                 </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        readonly
+                                        dense
+                                        outlined
+                                        clearable
+                                        label="싸인"
+                                        hide-details="auto"
+                                        v-model="fileUploadData.selectedFileName"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        readonly
+                                        dense
+                                        outlined
+                                        clearable
+                                        label="도장"
+                                        hide-details="auto"
+                                        v-model="fileUploadData.selectedFileName2"
+                                    ></v-text-field>
+                                </v-col>
+
                             </v-row>
                             <v-row dense>
                                 <v-col cols="12" class="text-right">
+                                    <v-btn
+                                        color="error"
+                                        @click="openSignDialog"
+                                    >싸인 업로드</v-btn>
                                     <v-btn
                                         color="primary"
                                         :loading="btn.saveAccount.loading"
@@ -125,5 +152,9 @@
                 </v-card>
             </v-col>
         </v-row>
+        <signFile-upload-dialog-component
+          :dialog="dialog"
+          @upload="fileUpload"
+        ></signFile-upload-dialog-component>
     </v-container>
 </v-main>
