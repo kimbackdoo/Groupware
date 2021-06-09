@@ -1,14 +1,19 @@
 package kr.co.metasoft.groupware.api.common.service;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -25,6 +30,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFShape;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.hibernate.dialect.Oracle10gDialect;
+import org.hibernate.dialect.OracleDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -75,16 +83,28 @@ public class VacationDataDownloadService {
 
             XSSFSheet sheet = workbook.getSheetAt(0);
 
+            //=========자기자신 싸인=========
+            Blob mySignPath = userSealService.selectUserseal(2L).getSignImage();
+            byte[] content = blobToByte(mySignPath);
+//            BufferedImage theImage = ImageIO.read(new ByteArrayInputStream(content));
+            addExcelImage(workbook, sheet, content, 27, 6, 0.3);
+
+            //==================
 
             //결제 도장
             //자기자신 싸인(userId = ??), 이사(userId = 17), 대표이사(userId = 1) => 결재 도장 url 불러오기
-            String mySeal = userSealService.selectUserseal(userEntity.getId()).getImageUrl();
-            String directorSeal = userSealService.selectUserseal(2L).getImageUrl();
-            String presidentSeal = userSealService.selectUserseal(1L).getImageUrl();
+            Blob ms = userSealService.selectUserseal(2L).getSealImage();
+            byte[] mySeal = blobToByte(ms);
+
+            Blob ds = userSealService.selectUserseal(2L).getSealImage();
+            byte[] directorSeal = blobToByte(ms);
+
+            Blob ps = userSealService.selectUserseal(2L).getSealImage();
+            byte[] presidentSeal = blobToByte(ms);
 
             //휴가신청자 싸인
-            String signPath = userSealService.selectUserseal(userEntity.getId()).getSignUrl();
-            addExcelImage(workbook, sheet, signPath, 27, 6, 0.3);
+//            String signPath = userSealService.selectUserseal(userEntity.getId()).getSignUrl();
+//            addExcelImage(workbook, sheet, signPath, 27, 6, 0.3);
 
             //휴가신청자 직급
             String roleValue = userEntity.getPosition();
@@ -241,13 +261,11 @@ public class VacationDataDownloadService {
         return baos.toByteArray();
     }
 
-    public void addExcelImage(XSSFWorkbook workbook, XSSFSheet sheet,String fileUrl, int row, int col,double size) throws IOException {
-        String picturePath = fileUrl;
+    public void addExcelImage(XSSFWorkbook workbook, XSSFSheet sheet,byte[] content, int row, int col,double size) throws IOException {
 
-        InputStream is = new FileInputStream(picturePath);
-        byte[] bytes = IOUtils.toByteArray(is);
+
+        byte[] bytes = content;
         int picIdx = workbook.addPicture(bytes, XSSFWorkbook.PICTURE_TYPE_PNG);
-        is.close();
 
         XSSFCreationHelper helper = workbook.getCreationHelper();
         XSSFDrawing drawing = sheet.createDrawingPatriarch();
@@ -262,6 +280,41 @@ public class VacationDataDownloadService {
         XSSFPicture pict = drawing.createPicture(anchor, picIdx);
         pict.resize();
         pict.resize(size, size);
+    }
+
+    //    public void addExcelImage(XSSFWorkbook workbook, XSSFSheet sheet,String fileUrl, int row, int col,double size) throws IOException {
+//    	String picturePath = fileUrl;
+//
+//    	InputStream is = new FileInputStream(picturePath);
+//    	byte[] bytes = IOUtils.toByteArray(is);
+//    	int picIdx = workbook.addPicture(bytes, XSSFWorkbook.PICTURE_TYPE_PNG);
+//    	is.close();
+//
+//    	XSSFCreationHelper helper = workbook.getCreationHelper();
+//    	XSSFDrawing drawing = sheet.createDrawingPatriarch();
+//    	XSSFClientAnchor anchor = helper.createClientAnchor();
+//
+//    	//이미지 cell 위치
+//    	anchor.setRow1(row);
+//    	anchor.setDx1(XSSFShape.EMU_PER_PIXEL*6);
+//    	anchor.setCol1(col);
+//    	anchor.setDy1(XSSFShape.EMU_PER_PIXEL*4);
+//
+//    	XSSFPicture pict = drawing.createPicture(anchor, picIdx);
+//    	pict.resize();
+//    	pict.resize(size, size);
+//    }
+
+
+    public byte[] blobToByte(Blob item) throws Exception {
+        byte[] content = null;
+        try {
+            Blob blob = (Blob) item;
+            content = blob.getBytes(0, (int) blob.length());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return content;
     }
 
 
