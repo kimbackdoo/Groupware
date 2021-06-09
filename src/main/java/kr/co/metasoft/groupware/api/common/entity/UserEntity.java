@@ -61,6 +61,9 @@ public class UserEntity {
     @Column (name = "`password`", columnDefinition = "varchar(500)", nullable = false)
     private String password;
 
+    @Column (name = "`name`", columnDefinition = "varchar(500)", nullable = true)
+    private String name;
+
     @Column (name = "`email`", columnDefinition = "varchar(500)", nullable = true)
     private String email;
 

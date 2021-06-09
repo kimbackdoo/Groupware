@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -24,11 +25,15 @@ import lombok.ToString;
 @NoArgsConstructor
 public class UserDto {
 
+
+
     private Long id;
 
     private String username;
 
     private String password;
+
+    private String name;
 
     private String email;
 

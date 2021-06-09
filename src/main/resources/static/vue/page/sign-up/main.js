@@ -31,7 +31,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                         if(value == null || value.length < 8) {
                             message = '비밀번호 8자 이상';
                         }
-//						 else if (!/(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/g.test(value)) {
+//                         else if (!/(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/g.test(value)) {
 //                            message = '영문자 숫자 특수문자 조합';
 //                        }
                          else if (/(\w)\1\1/.test(value)){
@@ -115,7 +115,8 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
             "fileUpload": async function (dataUpload) {
                 var form = new FormData();
                 store.commit("app/SET_LOADING", true);
-                form.append("file" , dataUpload.selectedFile);
+                form.append("sealImage" , dataUpload.selectedFile);
+                form.append("signImage" , dataUpload.selectedFile2);
 
                 this.fileUploadData.selectedFile=dataUpload.selectedFile;
                 this.fileUploadData.selectedFileName=dataUpload.selectedFileName;
@@ -123,7 +124,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                 this.fileUploadData.selectedFileName2=dataUpload.selectedFileName2;
                 console.log(this.fileUploadData.selectedFile);
                 console.log(this.fileUploadData.selectedFile2);
-
+                console.log(form);
 //                var returnType = await ito.api.app.upload.person(form);
                 store.commit("app/SET_LOADING", false);
 
@@ -136,8 +137,6 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     this.loadJobItems();
                 }
 */
-
-
             },
             "stck": function (str, limit) {
                 var o, d, p, n = 0, l = limit == null ? 4 : limit;
@@ -154,7 +153,10 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                 return (await metaGroupware.auth.idExists({"username": username})).data > 0 ? true : false;
             },
             "saveAccount": async function () {
+                var form = new FormData();
+                var form2 = new FormData();
                 let user, validate;
+                var seal, sign;
                 user = this.data.user;
                 this.btn.saveAccount.loading = true;
                 validate = this.$refs.form.validate();
@@ -163,18 +165,31 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                 } else if (await this.existUsername(user.username)) {
                     await metaGroupware.alert("동일한 아이디가 존재합니다.");
                 } else if (await metaGroupware.confirm("회원가입 하시겠습니까?")) {
-                    await metaGroupware.auth.signUp({"userDto": user});
 
-                    //userId 가져온 다음 -> seal 테이블에 이미지 추가하기
-                    // api.app.uploads.sealFile () -> controller 추가하기
+                    console.log(_.cloneDeep(user));
+
+                    form.append("sealImage" , this.fileUploadData.selectedFile);
+                    form.append("signImage" , this.fileUploadData.selectedFile2);
+                    form.append("birthDate", user.birthDate);
+                    form.append("department", user.department);
+                    form.append("email", user.email);
+                    form.append("name", user.name);
+                    form.append("password", user.password);
+                    form.append("position",user.position);
+                    form.append("teamName",user.teamName);
+                    form.append("username", user.username);
+
+
+                    console.log(this.fileUploadData.selectedFile);
+                    console.log(this.fileUploadData.selectedFile2);
+                    console.log(form);
+
+                    await metaGroupware.auth.signUp(form);
 
                     await metaGroupware.alert("회원가입 되었습니다.");
                     this.$router.push({"path": "/sign-in"});
                 }
                 this.btn.saveAccount.loading = false;
-            },
-            "inputSign": async function(){
-                //이미지 등록하기
             },
             "showPassword": function () {
                 if(this.text.icon == 'mdi-eye-off-outline'){

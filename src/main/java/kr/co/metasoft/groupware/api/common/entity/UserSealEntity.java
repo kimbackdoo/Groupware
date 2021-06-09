@@ -52,11 +52,11 @@ public class UserSealEntity {
     @Column(name = "`user_id`", columnDefinition="bigint(20)", nullable = true)
     private Long userId;
 
-    @Column(name = "`image_url`", columnDefinition = "varchar(100)", nullable = true)
-    private String imageUrl;
+    @Column(name = "`seal_image`", columnDefinition = "blob", nullable = true)
+    private Blob sealImage;
 
-    @Column(name = "`sign_url`", columnDefinition = "varchar(100)", nullable = true)
-    private String signUrl;
+    @Column(name = "`sign_image`", columnDefinition = "blob", nullable = true)
+    private Blob signImage;
 
     @CreatedDate
     @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss")

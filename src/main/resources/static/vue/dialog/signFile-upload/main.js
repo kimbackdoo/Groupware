@@ -67,6 +67,7 @@ FileUploadDialogComponent = Vue.component('signFile-upload-dialog-component', as
                 if(self.dataUpload.selectedFile != null && self.dataUpload.selectedFile.size > 0
                         || self.dataUpload.selectedFile2 != null && self.dataUpload.selectedFile2.size > 0) {
                     this.$emit("upload", self.dataUpload);
+                    this.dialog.visible = false;
                 } else {
                     await ito.alert('파일을 선택해주세요.');
                 }

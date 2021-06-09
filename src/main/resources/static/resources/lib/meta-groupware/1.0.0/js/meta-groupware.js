@@ -65,6 +65,10 @@ metaGroupware = {
         "signUp": async function (data) {
              return await axios({
                 "url": "/api/app/accounts/sign-up",
+                "enctype": "multipart/form-data",
+                "contentType" : 'application/json',
+                "cache" : false,
+                "processData" : false,
                 "method": "post",
                 "data": data,
             });
@@ -204,6 +208,9 @@ metaGroupware = {
                 "removeUser": function (id) { return axios({"url": "/api/common/users/"+ id, "method": "delete"}); },
                 "modifyPassword": function (id, data) { return axios({"url": "/api/common/users/" + id + "/password", "method": "put", "data": data}); }
             },
+            "userSeal": {
+                "createUserSeal" : function (data) { return axios({"url": "/api/app/userSeals","enctype": "multipart/form-data", "contentType" : false, "cache" : false, "processData" : false, "method": "post", "data": data});},
+            },
             "userPerson": {
                 "getUserPersonList": function (params) { return axios({"url": "/api/common/user-people", "method": "get", "params": params}); },
                 "getUserPerson": function (userId) { return axios({"url": "/api/common/user-people/" + userId, "method": "get"}); },
@@ -295,6 +302,7 @@ metaGroupware = {
             "mailSend": {
                 "getMailSend": function (params) {return axios({"url": "/api/app/mails", "method": "get", "params":params}); },
             }
+
         },
         "app": {
             "account": {
@@ -305,10 +313,7 @@ metaGroupware = {
             "RoleAndRoleMenuAndRoleApi": {
                 "createRoleAndRoleMenuAndRoleApi": function (data) { return axios({"url": "/api/app/role-menu-apis", "method": "post", "data": data}); },
                 "modifyRoleAndRoleMenuAndRoleApi": function (data) { return axios({"url": "/api/app/role-menu-apis", "method": "put", "data": data}); },
-            },
-            "upload" : {
-                "sealFile" : function (data) { return axios({"url": "/api/app/uploads/sealFiles","enctype": "multipart/form-data", "contentType" : false, "cache" : false, "processData" : false, "method": "post", "data": data});},
-            },
+            }
 
         },
         "util": {

@@ -1,5 +1,6 @@
 package kr.co.metasoft.groupware.api.common.dto;
 
+import java.sql.Blob;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Repository;
@@ -23,8 +24,8 @@ public class UserSealDto {
 
     private Long userId;
 
-    private String imageUrl;
+    private Blob sealImage;
 
-    private String signUrl;
+    private Blob signImage;
 
 }
