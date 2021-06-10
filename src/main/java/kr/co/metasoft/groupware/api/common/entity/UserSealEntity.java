@@ -9,6 +9,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -52,9 +53,11 @@ public class UserSealEntity {
     @Column(name = "`user_id`", columnDefinition="bigint(20)", nullable = true)
     private Long userId;
 
+    @Lob
     @Column(name = "`seal_image`", columnDefinition = "blob", nullable = true)
     private Blob sealImage;
 
+    @Lob
     @Column(name = "`sign_image`", columnDefinition = "blob", nullable = true)
     private Blob signImage;
 

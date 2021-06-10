@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.metasoft.groupware.api.app.dto.ByteSealImageDto;
 import kr.co.metasoft.groupware.api.common.dto.RoleUserDto;
 import kr.co.metasoft.groupware.api.common.dto.RoleUserParamDto;
 import kr.co.metasoft.groupware.api.common.dto.VacationParamDto;
@@ -69,7 +70,7 @@ public class VacationDataDownloadService {
 
     @Transactional(readOnly = true)
     public byte[] getVacationXlsx(VacationParamDto vacationParamDto) throws IOException {
-
+        byte[] dd = null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         VacationEntity vacationEntity = vacationService.getVacation(vacationParamDto.getId());
@@ -83,28 +84,48 @@ public class VacationDataDownloadService {
 
             XSSFSheet sheet = workbook.getSheetAt(0);
 
-            //=========자기자신 싸인=========
-            Blob mySignPath = userSealService.selectUserseal(2L).getSignImage();
-            byte[] content = blobToByte(mySignPath);
-//            BufferedImage theImage = ImageIO.read(new ByteArrayInputStream(content));
-            addExcelImage(workbook, sheet, content, 27, 6, 0.3);
 
-            //==================
+            //자기자신 싸인, 도장(user id)
+            ByteSealImageDto myImageDto = userSealService.selectImageDto(userEntity.getId());
+            byte[] mySeal = myImageDto.getSealImage(); //싸인
+            byte[] mySign = myImageDto.getSignImage(); //도장
+            if(myImageDto.getSealImage() == null) {
+                mySeal = mySign;
+            }else if(myImageDto.getSignImage() == null) {
+                mySign = mySeal;
+            }
+
+            //테스트
+//                ByteArrayInputStream bis = new ByteArrayInputStream(a);
+//                BufferedImage a1 = ImageIO.read(bis);
+//                ImageIO.write(a1, "png", new File("C:\\Users\\박진수\\Desktop\\ITO 자료\\test.png"));
+//                System.out.println("image created");
+//
+
 
             //결제 도장
-            //자기자신 싸인(userId = ??), 이사(userId = 17), 대표이사(userId = 1) => 결재 도장 url 불러오기
-            Blob ms = userSealService.selectUserseal(2L).getSealImage();
-            byte[] mySeal = blobToByte(ms);
+            //자기자신 싸인(userId = ??), 이사(userId = 2), 대표이사(userId = 1) => 결재 도장 url 불러오기
+            ByteSealImageDto directorImageDto = userSealService.selectImageDto(2L);
+            byte[] directorSign = directorImageDto.getSignImage(); //싸인
+            byte[] directorSeal = directorImageDto.getSealImage(); //도장
+            if(directorImageDto.getSealImage() == null) {
+                directorSeal = directorSign;
+            }else if(directorImageDto.getSignImage() == null) {
+                directorSign = directorSeal;
+            }
 
-            Blob ds = userSealService.selectUserseal(2L).getSealImage();
-            byte[] directorSeal = blobToByte(ms);
-
-            Blob ps = userSealService.selectUserseal(2L).getSealImage();
-            byte[] presidentSeal = blobToByte(ms);
+            ByteSealImageDto presidentImageDto = userSealService.selectImageDto(1L);
+            byte[] presidentSign = presidentImageDto.getSignImage(); //싸인
+            byte[] presidentSeal = presidentImageDto.getSealImage(); //도장
+            if(presidentImageDto.getSealImage() == null) {
+                presidentSeal = presidentSign;
+            }else if(presidentImageDto.getSignImage() == null) {
+                presidentSign = presidentSeal;
+            }
 
             //휴가신청자 싸인
-//            String signPath = userSealService.selectUserseal(userEntity.getId()).getSignUrl();
-//            addExcelImage(workbook, sheet, signPath, 27, 6, 0.3);
+            addExcelImage(workbook, sheet, mySign, 27, 6, 0.3);
+
 
             //휴가신청자 직급
             String roleValue = userEntity.getPosition();
@@ -131,7 +152,7 @@ public class VacationDataDownloadService {
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);
                 break;
             case "jeju":
-                roleValue = "test";
+                roleValue = "대표!";
                 addExcelImage(workbook, sheet, mySeal, 4, 7, 0.15);
                 addExcelImage(workbook, sheet, directorSeal, 4, 8, 0.15);
                 addExcelImage(workbook, sheet, presidentSeal, 4, 9, 0.15);

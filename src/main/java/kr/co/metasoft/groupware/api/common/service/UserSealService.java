@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import kr.co.metasoft.groupware.api.app.dto.ByteSealImageDto;
 import kr.co.metasoft.groupware.api.common.entity.UserSealEntity;
 import kr.co.metasoft.groupware.api.common.mapper.UserSealMapper;
 import kr.co.metasoft.groupware.api.common.repository.UserSealRepository;
@@ -52,6 +53,13 @@ public class UserSealService {
     public UserSealEntity selectUserseal(
             @Valid Long userId) {
         return userSealMapper.selectUserSeal(userId);
+    }
+
+    @Validated( value = {ReadValidationGroup.class})
+    @Transactional
+    public ByteSealImageDto selectImageDto(
+            @Valid Long userId) {
+        return userSealMapper.selectImageDto(userId);
     }
 
 

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import kr.co.metasoft.groupware.api.app.dto.ByteSealImageDto;
 import kr.co.metasoft.groupware.api.common.entity.UserSealEntity;
 
 @Mapper
@@ -15,6 +16,10 @@ public interface UserSealMapper {
 
 
     public UserSealEntity selectUserSeal (
+            @Param (value = "userId") Long userId);
+
+
+    public ByteSealImageDto selectImageDto (
             @Param (value = "userId") Long userId);
 
 

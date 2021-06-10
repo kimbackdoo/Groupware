@@ -115,16 +115,13 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
             "fileUpload": async function (dataUpload) {
                 var form = new FormData();
                 store.commit("app/SET_LOADING", true);
-                form.append("sealImage" , dataUpload.selectedFile);
-                form.append("signImage" , dataUpload.selectedFile2);
+                form.append("sealImage" , dataUpload.selectedFile2);
+                form.append("signImage" , dataUpload.selectedFile);
 
                 this.fileUploadData.selectedFile=dataUpload.selectedFile;
                 this.fileUploadData.selectedFileName=dataUpload.selectedFileName;
                 this.fileUploadData.selectedFile2=dataUpload.selectedFile2;
                 this.fileUploadData.selectedFileName2=dataUpload.selectedFileName2;
-                console.log(this.fileUploadData.selectedFile);
-                console.log(this.fileUploadData.selectedFile2);
-                console.log(form);
 //                var returnType = await ito.api.app.upload.person(form);
                 store.commit("app/SET_LOADING", false);
 
@@ -154,9 +151,7 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
             },
             "saveAccount": async function () {
                 var form = new FormData();
-                var form2 = new FormData();
                 let user, validate;
-                var seal, sign;
                 user = this.data.user;
                 this.btn.saveAccount.loading = true;
                 validate = this.$refs.form.validate();
@@ -166,10 +161,9 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     await metaGroupware.alert("동일한 아이디가 존재합니다.");
                 } else if (await metaGroupware.confirm("회원가입 하시겠습니까?")) {
 
-                    console.log(_.cloneDeep(user));
 
-                    form.append("sealImage" , this.fileUploadData.selectedFile);
-                    form.append("signImage" , this.fileUploadData.selectedFile2);
+                    form.append("sealImage" , this.fileUploadData.selectedFile2);
+                    form.append("signImage" , this.fileUploadData.selectedFile);
                     form.append("birthDate", user.birthDate);
                     form.append("department", user.department);
                     form.append("email", user.email);
@@ -179,10 +173,6 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     form.append("teamName",user.teamName);
                     form.append("username", user.username);
 
-
-                    console.log(this.fileUploadData.selectedFile);
-                    console.log(this.fileUploadData.selectedFile2);
-                    console.log(form);
 
                     await metaGroupware.auth.signUp(form);
 

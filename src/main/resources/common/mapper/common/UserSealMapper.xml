@@ -22,12 +22,34 @@
         <result property="signImage" column="sign_image" jdbcType="BLOB" javaType="byte[]" />
     </resultMap>
 
+    <resultMap id="ImageResultMap" type = "kr.co.metasoft.groupware.api.app.dto.ByteSealImageDto">
+        <result property="sealImage" column="seal_image" jdbcType="BLOB" />
+        <result property="signImage" column="sign_image" jdbcType="BLOB" />
+    </resultMap>
+
+
+
+
     <select
         id="selectUserSeal"
         parameterType="java.util.Map"
         resultMap="userSealResultMap"
     >
         <include refid="selectFrom" />
+        WHERE
+            `seal`.`user_id` = #{userId}
+    </select>
+
+    <select
+        id="selectImageDto"
+        parameterType="java.util.Map"
+        resultMap="ImageResultMap"
+    >
+        SELECT
+            `seal`.`seal_image`,
+            `seal`.`sign_image`
+        FROM
+            `tb_seal` `seal`
         WHERE
             `seal`.`user_id` = #{userId}
     </select>
