@@ -11,6 +11,15 @@
                 <v-card-text>
                     <v-form ref="form">
                         <v-row dense>
+                           <v-col cols="12">
+                              <picker-date-picker-component
+                                  dense
+                                  outlined
+                                  append-icon="mdi-calendar"
+                                  label="공지 날짜 입력"
+                                  v-model="data.notice.postingDate"
+                              ></picker-date-picker-component>
+                           </v-col>
                             <v-col cols="12">
                                 <v-text-field
                                     dense

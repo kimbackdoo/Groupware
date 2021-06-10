@@ -1,3 +1,4 @@
-* {
-    font-family: "Spoqa Han Sans"
-}
+* { font-family: "Spoqa Han Sans" }
+
+.no-icon .v-expansion-panel-header__icon { display: none; }
+.no-icon .v-expansion-panel-header--active { pointer-events: none; }

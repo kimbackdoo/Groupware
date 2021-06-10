@@ -40,6 +40,7 @@ GroupwareMainPage = Vue.component('groupware-main-page', async function (resolve
                     self.calendar.selectedOpen = true;
                 }
                 event.term = event.start + " ~ " + event.end;
+                if(event.start == event.end) event.term = event.start;
                 self.calendar.selectedEvent = event;
                 self.calendar.selectedElement = nativeEvent.target;
                 nativeEvent.stopPropagation();
@@ -57,11 +58,13 @@ GroupwareMainPage = Vue.component('groupware-main-page', async function (resolve
                     "sterm": start.date,
                     "eterm": end.date
                 })).data.items;
+                console.log(vacationList);
 
                 this.calendar.events = [];
                 for(let i=0; i<vacationList.length; i++) {
                     step = (await metaGroupware.api.common.approval.getApproval(vacationList[i].id)).data.step;
-                    if(step !== 3) continue;
+                    console.log(step);
+                    if(step !== 2) continue;
 
                     userName = (await metaGroupware.api.common.user.getUser(vacationList[i].userId)).data.username;
                     switch(vacationList[i].type) {
@@ -129,10 +132,16 @@ GroupwareMainPage = Vue.component('groupware-main-page', async function (resolve
                     await this.loadCalendar({});
                 }
             },
-            "registerNotice": function() {
+            "registerNotice": function(value) {
+                console.log(_.cloneDeep(value));
                 this.$router.push({
-                    "path": "/groupware/notices/details"
-                });
+                    "path": "/groupware/notices/details",
+                    //이동할때 해당 날짜 값 보내기
+                    "query": {
+                        "data": _.cloneDeep(value)
+                    }
+
+               });
             },
             "expenditureDownload": async function() {
                 await metaGroupware.api.common.expenditureDownload.downloadExpenditureXlsx();

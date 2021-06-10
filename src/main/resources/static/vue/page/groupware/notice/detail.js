@@ -5,7 +5,14 @@ GroupwareNoticeDetailPage = Vue.component('roupware-notice-detail-page', async f
         "data": function() {
             return {
                 "data": {
-                    "notice": {}
+                    "notice": {
+                        "postingDate": null,
+                        "contents": null,
+                        "title": null
+                    }
+                },
+                "query":{
+                    "value": {}
                 }
             };
         },
@@ -21,6 +28,8 @@ GroupwareNoticeDetailPage = Vue.component('roupware-notice-detail-page', async f
             "saveNotice": async function() {
                 let userId = store.state.app.user.id,
                     notice = _.cloneDeep(this.data.notice);
+
+                notice.postingDate = this.data.notice.postingDate;
 
                 delete notice.createdDate;
                 delete notice.lastModifiedDate;
@@ -38,9 +47,21 @@ GroupwareNoticeDetailPage = Vue.component('roupware-notice-detail-page', async f
             },
             "initializeNotice": function() {
                 this.data.notice = [];
-            }
+            },
+            "setDataInfo": async function(){
+                var self =this;
+
+                var value = await self.$route.query.data;
+                if(value !== undefined){
+                    self.query.value = _.cloneDeep(value);
+                    self.data.notice.postingDate = _.cloneDeep(value.date);
+                }
+                console.log(this.data.notice.postingDate);
+            },
+
         },
         "mounted": async function() {
+            await this.setDataInfo();
             await this.setNotice();
         }
     });
