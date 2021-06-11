@@ -4,6 +4,7 @@ import java.sql.Blob;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,14 @@ public class UserSealDto {
     private Long id;
 
     private Long userId;
+
+    private String sealName;
+
+    private String signName;
+
+    private MultipartFile sealMultiFile;
+
+    private MultipartFile signMultiFile;
 
     private Blob sealImage;
 

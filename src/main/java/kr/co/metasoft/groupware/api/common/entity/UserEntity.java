@@ -87,7 +87,7 @@ public class UserEntity {
     @CreatedDate
     @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat (pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column (name = "`created_date`", columnDefinition = "datetime", nullable = false, updatable = true)
+    @Column (name = "`created_date`", columnDefinition = "datetime", nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
     @LastModifiedDate

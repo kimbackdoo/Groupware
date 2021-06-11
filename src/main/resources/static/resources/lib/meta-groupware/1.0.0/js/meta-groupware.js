@@ -210,6 +210,8 @@ metaGroupware = {
             },
             "userSeal": {
                 "createUserSeal" : function (data) { return axios({"url": "/api/app/userSeals","enctype": "multipart/form-data", "contentType" : false, "cache" : false, "processData" : false, "method": "post", "data": data});},
+                "modifyUserSeal" : function(data) {return axios({"url": "/api/app/userSeals/modify", "enctype": "multipart/form-data", "contentType" : 'application/json', "cache" : false, "processData" : false, "method":"put", "data": data}); },
+                "getUserSeal" : function(userId) {return axios({"url": "/api/app/userSeals/"+userId, "method": "get"}); }
             },
             "userPerson": {
                 "getUserPersonList": function (params) { return axios({"url": "/api/common/user-people", "method": "get", "params": params}); },

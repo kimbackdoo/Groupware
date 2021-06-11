@@ -28,6 +28,10 @@ import lombok.ToString;
 public class AccountDto {
 
 
+    private String sealName;
+
+    private String signName;
+
     private MultipartFile sealImage;
 
     private MultipartFile signImage;

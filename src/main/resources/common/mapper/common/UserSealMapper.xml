@@ -6,8 +6,8 @@
         SELECT
             `seal`.`id`,
             `seal`.`user_id`,
-            `seal`.`seal_image`,
-            `seal`.`sign_image`
+            `seal`.`seal_name`,
+            `seal`.`sign_name`
         FROM
             `tb_seal` `seal`
     </sql>
@@ -18,8 +18,8 @@
     <resultMap id="userSealResultMap" type ="kr.co.metasoft.groupware.api.common.entity.UserSealEntity" >
         <result property="id" column="id" />
         <result property="userId" column="user_id" />
-        <result property="sealImage" column="seal_image" jdbcType="BLOB" javaType="byte[]" />
-        <result property="signImage" column="sign_image" jdbcType="BLOB" javaType="byte[]" />
+        <result property="sealName" column="seal_name" />
+        <result property="signName" column="sign_name" />
     </resultMap>
 
     <resultMap id="ImageResultMap" type = "kr.co.metasoft.groupware.api.app.dto.ByteSealImageDto">

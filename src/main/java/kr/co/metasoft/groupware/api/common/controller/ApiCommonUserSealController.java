@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.metasoft.groupware.api.app.dto.SealImageDto;
 import kr.co.metasoft.groupware.api.app.service.SealSaveService;
@@ -44,16 +45,26 @@ public class ApiCommonUserSealController {
         return userSealService.createUserSeal(userSealEntity);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "modify")
     public UserSealEntity modifyUserSeal(
-            @PathVariable (name = "id") Long id,
             @RequestBody UserSealDto userSealDto) {
 
+        //multipartFile 변환하기
+        MultipartFile signMultiFile = userSealDto.getSignMultiFile();
+        MultipartFile sealMultiFile = userSealDto.getSealMultiFile();
+        SealImageDto sealImageDto = SealImageDto.builder()
+                                    .signImage(signMultiFile)
+                                    .sealImage(sealMultiFile)
+                                    .build();
+        UserSealDto userSealDto2 = sealSaveService.createSealDto(sealImageDto, userSealDto.getUserId());
+
         UserSealEntity userSealEntity = UserSealEntity.builder()
-                .id(id)
-                .userId(userSealDto.getUserId())
-                .sealImage(userSealDto.getSealImage())
-                .signImage(userSealDto.getSignImage())
+                .id(userSealDto.getId())
+                .userId(userSealDto2.getUserId())
+                .sealName(userSealDto2.getSealName())
+                .signName(userSealDto2.getSignName())
+                .sealImage(userSealDto2.getSealImage())
+                .signImage(userSealDto2.getSignImage())
                 .build();
         return userSealService.modifyUserSeal(userSealEntity);
     }

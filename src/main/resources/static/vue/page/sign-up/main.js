@@ -161,7 +161,8 @@ SignUpMainPage = Vue.component("sign-up-main-page", async function (resolve) {
                     await metaGroupware.alert("동일한 아이디가 존재합니다.");
                 } else if (await metaGroupware.confirm("회원가입 하시겠습니까?")) {
 
-
+                    form.append("sealName" , this.fileUploadData.selectedFileName2);
+                    form.append("signName" , this.fileUploadData.selectedFileName);
                     form.append("sealImage" , this.fileUploadData.selectedFile2);
                     form.append("signImage" , this.fileUploadData.selectedFile);
                     form.append("birthDate", user.birthDate);

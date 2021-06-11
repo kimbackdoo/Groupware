@@ -53,6 +53,12 @@ public class UserSealEntity {
     @Column(name = "`user_id`", columnDefinition="bigint(20)", nullable = true)
     private Long userId;
 
+    @Column(name = "`seal_name`", columnDefinition = "varchar(100)", nullable = true)
+    private String sealName;
+
+    @Column(name = "`sign_name`", columnDefinition = "varchar(100)", nullable = true)
+    private String signName;
+
     @Lob
     @Column(name = "`seal_image`", columnDefinition = "blob", nullable = true)
     private Blob sealImage;

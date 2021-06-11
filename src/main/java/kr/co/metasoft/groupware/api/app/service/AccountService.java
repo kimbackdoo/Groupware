@@ -233,6 +233,8 @@ public class AccountService {
         System.out.println("----------------userSealDto 생성-------------------------------");
         UserSealEntity userSealEntity = UserSealEntity.builder()
                 .userId(userId)
+                .sealName(accountDto.getSealName())
+                .signName(accountDto.getSignName())
                 .sealImage(userSealDto.getSealImage())
                 .signImage(userSealDto.getSignImage())
                 .build();

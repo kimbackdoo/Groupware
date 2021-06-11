@@ -6,6 +6,7 @@
         SELECT
             `user`.`id`,
             `user`.`username`,
+            `user`.`name`,
             `user`.`password`,
             `user`.`email`,
             `user`.`birth_date`,
@@ -31,6 +32,7 @@
     <resultMap id="userResultMap" type="kr.co.metasoft.groupware.api.common.entity.UserEntity">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
+        <result property="name" column="name"/>
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="birthDate" column="birth_date"/>

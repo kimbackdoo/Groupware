@@ -16,6 +16,11 @@ router = new VueRouter({
                 // 그룹웨어 메뉴
                 {
                     "name": "GroupwareMenu",
+                    "path": "/groupware/user-profile",
+                    "component": UserProfilePage
+                },
+                {
+                    "name": "GroupwareMenu",
                     "path": "/groupware",
                     "redirect": "/groupware/main"
                 },
@@ -89,6 +94,7 @@ router = new VueRouter({
                     "path": "/settings/ban-ip/detail",
                     "component": SettingBanIPDetailMainPage
                 },
+
             ]
         },
         {
