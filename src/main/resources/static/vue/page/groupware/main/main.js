@@ -122,7 +122,7 @@ GroupwareMainPage = Vue.component('groupware-main-page', async function (resolve
                     vacation = (await metaGroupware.api.common.vacation.createVacation(data)).data;
                     roleValue = (await metaGroupware.api.common.roleUser.getRoleUserList({"userId": data.userId})).data.items[0].role.value;
                     await metaGroupware.api.common.mailSend.getMailSend({
-                        "to": "dbwlgna98@naver.com",
+                        "to": "이메일",
                         "subject": data.name + "님의 휴가신청서",
                         "text": "<a href=http://localhost:81/groupware/approval?vacationId=" + vacation.id + "&role=" + roleValue + ">" +
                                     "http://localhost:81/groupware/approval" +

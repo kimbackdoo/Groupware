@@ -38,7 +38,7 @@ GroupwareApprovalPage = Vue.component('groupware-approval-page', async function(
                        case "ROLE_EMPLOYEE":
                            await metaGroupware.api.common.approval.modifyApproval(vacationId, {"teamLeader": "T"});
                            await metaGroupware.api.common.mailSend.getMailSend({
-                               "to": "dbwlgna98@naver.com",
+                               "to": "이메일",
                                "subject": userName + "님의 휴가신청서",
                                "text": "<a href=http://localhost:81/groupware/approval?vacationId=" + vacationId + "&role=ROLE_TEAMLEADER>" +
                                    "http://localhost:81/groupware/approval" +
@@ -48,7 +48,7 @@ GroupwareApprovalPage = Vue.component('groupware-approval-page', async function(
                        case "ROLE_TEAMLEADER":
                            await metaGroupware.api.common.approval.modifyApproval(vacationId, {"director": "T"});
                            await metaGroupware.api.common.mailSend.getMailSend({
-                               "to": "dbwlgna98@naver.com",
+                               "to": "이메일",
                                "subject": userName + "님의 휴가신청서",
                                "text": "<a href=http://localhost:81/groupware/approval?vacationId=" + vacationId + "&role=ROLE_DIRECTOR>" +
                                             "http://localhost:81/groupware/approval" +
@@ -61,7 +61,7 @@ GroupwareApprovalPage = Vue.component('groupware-approval-page', async function(
                                "aprrovalDate": moment().format("YYYY-MM-DD")
                            });
                            await metaGroupware.api.common.mailSend.getMailSend({
-                               "to": "kdk7121743@naver.com",
+                               "to": "이메일",
                                "subject": userName + "님의 휴가신청서",
                                "text": userName + "님의 휴가가 최종 승인되었습니다.",
                            });
